@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "866567053055",
+    "project_id": "pdmalquilermesasproyectofinal",
+    "storage_bucket": "pdmalquilermesasproyectofinal.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:866567053055:android:1983cdefceb257ca2036ca",
+        "android_client_info": {
+          "package_name": "com.example.pdm_alquilermesasproyectofinal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "866567053055-gf32esdopmb0km1j1gqqvql4i0jela48.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.pdm_alquilermesasproyectofinal",
+            "certificate_hash": "e49f9b26b49a526ad2890c73c088249133f6a547"
+          }
+        },
+        {
+          "client_id": "866567053055-1cqs3mk7kr6n0cjcpmc6n9c4emoiqlul.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBxV1Iop1TJVPb1bSA0xU-SQwO82ZYdlH0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "866567053055-1cqs3mk7kr6n0cjcpmc6n9c4emoiqlul.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
