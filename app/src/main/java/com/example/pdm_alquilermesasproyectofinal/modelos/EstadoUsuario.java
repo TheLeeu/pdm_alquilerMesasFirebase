@@ -4,6 +4,14 @@ public class EstadoUsuario {
     private int idEstado;
     private String estado;
 
+    public EstadoUsuario(int idEstado, String estado) {
+        this.idEstado = idEstado;
+        this.estado = estado;
+    }
+
+    public EstadoUsuario() {
+    }
+
     public int getIdEstado() {
         return idEstado;
     }

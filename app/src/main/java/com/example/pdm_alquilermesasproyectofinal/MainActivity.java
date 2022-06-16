@@ -3,7 +3,10 @@ package com.example.pdm_alquilermesasproyectofinal;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
@@ -25,6 +28,12 @@ import com.google.firebase.database.ValueEventListener;
 public class MainActivity extends AppCompatActivity {
 
     public static final String TBL_USUARIOS = "USUARIOS";
+    public static final TipoUsuario USUARIO_TIPO_ADMINISTRADOR = new TipoUsuario(0,"Administrador");
+    public static final TipoUsuario USUARIO_TIPO_CLIENTE = new TipoUsuario(1,"Cliente");
+    public static final EstadoUsuario USUARIO_ESTADO_ACTIVO = new EstadoUsuario(0,"Activo");
+    public static final EstadoUsuario USUARIO_ESTADO_BAJA = new EstadoUsuario(1,"Baja");
+    public static final String ERROR_INTERNET_FIREBASE = "com.google.firebase.FirebaseNetworkException: A network error (such as timeout, interrupted connection or unreachable host) has occurred.";
+    public static final String FOTO_USUARIOS_NUEVOS_DEFAULT = "https://firebasestorage.googleapis.com/v0/b/pdmalquilermesasproyectofinal.appspot.com/o/perfil.png?alt=media&token=62e07752-76cc-4cad-9ca8-1aef18598b4e";
 
     private FirebaseAuth mAuth;
 
@@ -46,13 +55,13 @@ public class MainActivity extends AppCompatActivity {
                 Usuario usuario = snapshot.getValue(Usuario.class);
                 //VALIDAR QUE USUARIO TENGA ESTADO ACTIVO EN SU CUENTA
                 //SI ES 0 = ACTIVO
-                if(usuario.getEstado().getIdEstado() == 0){
+                if(usuario.getEstado().getIdEstado() == USUARIO_TIPO_ADMINISTRADOR.getIdTipoUsuario()){
                     //VALIDAR QUE TIPO DE USUARIO ES
                     //SI ES 0 = Administrador
                     //DEPENDIENDO DE SU TIPO SE LE MANDA A UNA ACTIVIDAD
                     if(usuario.getTipo().getIdTipoUsuario() == 0){
                         cargarAdministradorMainActivity();
-                    }else if(usuario.getTipo().getIdTipoUsuario() == 1){ //SI ES 1 = Cliente
+                    }else if(usuario.getTipo().getIdTipoUsuario() == USUARIO_TIPO_CLIENTE.getIdTipoUsuario()){ //SI ES 1 = Cliente
                         cargarClienteMainActivity();
                     }
                 }else{
@@ -90,13 +99,31 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        // Verifica si el usuario tiene sesion iniciada (non-null) y actualiza la vista
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null){
-            validarUsuario(currentUser);
+        //VERIFICAR QUE SE TENGA CONEXION A INTERNET
+        ConnectivityManager cm =
+                (ConnectivityManager)MainActivity.this.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+        if(isConnected){
+            // Verifica si el usuario tiene sesion iniciada (non-null) y actualiza la vista
+            FirebaseUser currentUser = mAuth.getCurrentUser();
+            if(currentUser != null){
+                validarUsuario(currentUser);
+            }else{
+                cargarLoginActivity();
+            }
         }else{
-            cargarLoginActivity();
+            cargarSinInternetActivity();
         }
+
+    }
+
+    public void cargarSinInternetActivity(){
+        Intent intent = new Intent(this, SinInternetActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     public void crearUsuarioAdministrador(){
@@ -131,19 +158,19 @@ public class MainActivity extends AppCompatActivity {
         usuario.setNombre("Administrador");
         usuario.setApellido("Administrador");
         usuario.setEdad(25);
-        usuario.setFoto("https://firebasestorage.googleapis.com/v0/b/pdmalquilermesasproyectofinal.appspot.com/o/perfil.png?alt=media&token=62e07752-76cc-4cad-9ca8-1aef18598b4e");
+        usuario.setFoto(FOTO_USUARIOS_NUEVOS_DEFAULT);
         usuario.setCorreo(user.getEmail());
 
         //PARA TIPO DE USUARIO
         TipoUsuario tipoU = new TipoUsuario();
-        tipoU.setIdTipoUsuario(0);
-        tipoU.setTipoUsuario("Administrador");
+        tipoU.setIdTipoUsuario(USUARIO_TIPO_ADMINISTRADOR.getIdTipoUsuario());
+        tipoU.setTipoUsuario(USUARIO_TIPO_ADMINISTRADOR.getTipoUsuario());
         usuario.setTipo(tipoU);
 
         //PARA ESTADO USUARIO
         EstadoUsuario estadoU = new EstadoUsuario();
-        estadoU.setIdEstado(0);
-        estadoU.setEstado("Activo");
+        estadoU.setIdEstado(USUARIO_ESTADO_ACTIVO.getIdEstado());
+        estadoU.setEstado(USUARIO_ESTADO_ACTIVO.getEstado());
         usuario.setEstado(estadoU);
 
         myRef.child(user.getUid()).setValue(usuario);

@@ -107,6 +107,8 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(LoginActivity.this, "CORREO NO REGISTRADO", Toast.LENGTH_SHORT).show();
                     }else if(e.toString().equals("com.google.firebase.auth.FirebaseAuthInvalidCredentialsException: The password is invalid or the user does not have a password.")){
                         Toast.makeText(LoginActivity.this, "CONTRASEÑA INCORRECTA", Toast.LENGTH_SHORT).show();
+                    }else if(e.toString().equals(MainActivity.ERROR_INTERNET_FIREBASE)){
+                        Toast.makeText(LoginActivity.this, "Error de conexion a internet", Toast.LENGTH_SHORT).show();
                     }
                 }
             });
@@ -125,13 +127,13 @@ public class LoginActivity extends AppCompatActivity {
                 Usuario usuario = snapshot.getValue(Usuario.class);
                 //VALIDAR QUE USUARIO TENGA ESTADO ACTIVO EN SU CUENTA
                 //SI ES 0 = ACTIVO
-                if(usuario.getEstado().getIdEstado() == 0){
+                if(usuario.getEstado().getIdEstado() == MainActivity.USUARIO_ESTADO_ACTIVO.getIdEstado()){
                     //VALIDAR QUE TIPO DE USUARIO ES
                     //SI ES 0 = Administrador
                     //DEPENDIENDO DE SU TIPO SE LE MANDA A UNA ACTIVIDAD
-                    if(usuario.getTipo().getIdTipoUsuario() == 0){
+                    if(usuario.getTipo().getIdTipoUsuario() == MainActivity.USUARIO_TIPO_ADMINISTRADOR.getIdTipoUsuario()){
                         cargarAdministradorMainActivity();
-                    }else if(usuario.getTipo().getIdTipoUsuario() == 1){ //SI ES 1 = Cliente
+                    }else if(usuario.getTipo().getIdTipoUsuario() == MainActivity.USUARIO_TIPO_CLIENTE.getIdTipoUsuario()){ //SI ES 1 = Cliente
                         cargarClienteMainActivity();
                     }
                 }else{

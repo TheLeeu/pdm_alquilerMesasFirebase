@@ -54,10 +54,8 @@ public class RegistroClienteActivity extends AppCompatActivity {
         && !et_correo.getText().toString().isEmpty()
         && !et_contrasenia.getText().toString().isEmpty()
         && !et_contrasenia2.getText().toString().isEmpty()){
-            Log.d("ENTRA","SI");
             //VALIDAR QUE LAS CONTRASEÑAS SEAN IGUALES
             if(et_contrasenia.getText().toString().equals(et_contrasenia2.getText().toString())){
-                Log.d("ENTRA","SI");
 
                 //VALIDAR QUE LA CONTRASEÑA TENGA UNA LONGITUD MAYOR O IGUAL A 6 CARACTERES
                 if(et_contrasenia.getText().toString().length() >= 6){
@@ -78,19 +76,19 @@ public class RegistroClienteActivity extends AppCompatActivity {
                                         usuario.setNombre(et_nombre.getText().toString());
                                         usuario.setApellido(et_apellido.getText().toString());
                                         usuario.setEdad(Integer.parseInt(et_edad.getText().toString()));
-                                        usuario.setFoto("https://firebasestorage.googleapis.com/v0/b/pdmalquilermesasproyectofinal.appspot.com/o/perfil.png?alt=media&token=62e07752-76cc-4cad-9ca8-1aef18598b4e");
+                                        usuario.setFoto(MainActivity.FOTO_USUARIOS_NUEVOS_DEFAULT);
                                         usuario.setCorreo(et_correo.getText().toString());
 
                                         //PARA TIPO DE USUARIO
                                         TipoUsuario tipoU = new TipoUsuario();
-                                        tipoU.setIdTipoUsuario(1);
-                                        tipoU.setTipoUsuario("Cliente");
+                                        tipoU.setIdTipoUsuario(MainActivity.USUARIO_TIPO_CLIENTE.getIdTipoUsuario());
+                                        tipoU.setTipoUsuario(MainActivity.USUARIO_TIPO_CLIENTE.getTipoUsuario());
                                         usuario.setTipo(tipoU);
 
                                         //PARA ESTADO USUARIO
                                         EstadoUsuario estadoU = new EstadoUsuario();
-                                        estadoU.setIdEstado(0);
-                                        estadoU.setEstado("Activo");
+                                        estadoU.setIdEstado(MainActivity.USUARIO_ESTADO_ACTIVO.getIdEstado());
+                                        estadoU.setEstado(MainActivity.USUARIO_ESTADO_ACTIVO.getEstado());
                                         usuario.setEstado(estadoU);
 
                                         FirebaseUser user = myAuth.getCurrentUser();
