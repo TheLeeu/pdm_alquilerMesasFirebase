@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.pdm_alquilermesasproyectofinal.modelos.EstadoMesa;
 import com.example.pdm_alquilermesasproyectofinal.modelos.EstadoUsuario;
 import com.example.pdm_alquilermesasproyectofinal.modelos.TipoUsuario;
 import com.example.pdm_alquilermesasproyectofinal.modelos.Usuario;
@@ -28,12 +29,22 @@ import com.google.firebase.database.ValueEventListener;
 public class MainActivity extends AppCompatActivity {
 
     public static final String TBL_USUARIOS = "USUARIOS";
+    public static final String TBL_TIPO_USUARIOS = "TIPO_USUARIOS";
+    public static final String TBL_ESTADO_MESA = "ESTADO_MESA";
+    public static final String TBL_ESTADO_USUARIOS = "ESTADO_USUARIOS";
+    public static final String TBL_LOCALES = "LOCALES";
+    public static final String TBL_EMPLEADOS = "EMPLEADOS";
+
     public static final TipoUsuario USUARIO_TIPO_ADMINISTRADOR = new TipoUsuario(0,"Administrador");
     public static final TipoUsuario USUARIO_TIPO_CLIENTE = new TipoUsuario(1,"Cliente");
+    public static final TipoUsuario USUARIO_TIPO_EMPLEADO = new TipoUsuario(2,"Empleado");
     public static final EstadoUsuario USUARIO_ESTADO_ACTIVO = new EstadoUsuario(0,"Activo");
     public static final EstadoUsuario USUARIO_ESTADO_BAJA = new EstadoUsuario(1,"Baja");
     public static final String ERROR_INTERNET_FIREBASE = "com.google.firebase.FirebaseNetworkException: A network error (such as timeout, interrupted connection or unreachable host) has occurred.";
     public static final String FOTO_USUARIOS_NUEVOS_DEFAULT = "https://firebasestorage.googleapis.com/v0/b/pdmalquilermesasproyectofinal.appspot.com/o/perfil.png?alt=media&token=62e07752-76cc-4cad-9ca8-1aef18598b4e";
+    public static final EstadoMesa ESTADO_MESA_DISPONIBLE = new EstadoMesa(0,"Disponible");
+    public static final EstadoMesa ESTADO_MESA_OCUPADO = new EstadoMesa(1, "Ocupado");
+
 
     private FirebaseAuth mAuth;
 
@@ -44,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
 
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
+
+
     }
 
     public void validarUsuario(FirebaseUser user){
@@ -55,14 +68,15 @@ public class MainActivity extends AppCompatActivity {
                 Usuario usuario = snapshot.getValue(Usuario.class);
                 //VALIDAR QUE USUARIO TENGA ESTADO ACTIVO EN SU CUENTA
                 //SI ES 0 = ACTIVO
-                if(usuario.getEstado().getIdEstado() == USUARIO_TIPO_ADMINISTRADOR.getIdTipoUsuario()){
+                if(usuario.getEstado().getIdEstado() == USUARIO_ESTADO_ACTIVO.getIdEstado()){
                     //VALIDAR QUE TIPO DE USUARIO ES
-                    //SI ES 0 = Administrador
                     //DEPENDIENDO DE SU TIPO SE LE MANDA A UNA ACTIVIDAD
-                    if(usuario.getTipo().getIdTipoUsuario() == 0){
+                    if(usuario.getTipo().getIdTipoUsuario() == USUARIO_TIPO_ADMINISTRADOR.getIdTipoUsuario()){
                         cargarAdministradorMainActivity();
                     }else if(usuario.getTipo().getIdTipoUsuario() == USUARIO_TIPO_CLIENTE.getIdTipoUsuario()){ //SI ES 1 = Cliente
                         cargarClienteMainActivity();
+                    }else if(usuario.getTipo().getIdTipoUsuario() == USUARIO_TIPO_EMPLEADO.getIdTipoUsuario()){
+                        cargarEmpleadoMainActivity();
                     }
                 }else{
                     Toast.makeText(MainActivity.this, "La cuenta se encuentra inactiva", Toast.LENGTH_LONG).show();
@@ -96,6 +110,12 @@ public class MainActivity extends AppCompatActivity {
         finish();
     }
 
+    public void cargarEmpleadoMainActivity(){
+        Intent intent = new Intent(this, EmpleadoMainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -119,11 +139,54 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-
     public void cargarSinInternetActivity(){
         Intent intent = new Intent(this, SinInternetActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    public void crearTipoUsuario(){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference(TBL_TIPO_USUARIOS);
+        //LLENAR DATOS
+        TipoUsuario tipo_usuarios = new TipoUsuario();
+        tipo_usuarios.setIdTipoUsuario(USUARIO_TIPO_ADMINISTRADOR.getIdTipoUsuario());
+        tipo_usuarios.setTipoUsuario(USUARIO_TIPO_ADMINISTRADOR.getTipoUsuario());
+        //ENVIAR DATOS
+        myRef.child(String.valueOf(USUARIO_TIPO_ADMINISTRADOR.getIdTipoUsuario())).setValue(tipo_usuarios);
+        tipo_usuarios.setIdTipoUsuario(USUARIO_TIPO_CLIENTE.getIdTipoUsuario());
+        tipo_usuarios.setTipoUsuario(USUARIO_TIPO_CLIENTE.getTipoUsuario());
+        myRef.child(String.valueOf(USUARIO_TIPO_CLIENTE.getIdTipoUsuario())).setValue(tipo_usuarios);
+
+
+    }
+
+    public void crearEstadoUsuarios(){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference(TBL_ESTADO_USUARIOS);
+        //LLENAR DATOS
+        EstadoUsuario estado_usuario = new EstadoUsuario(USUARIO_ESTADO_ACTIVO.getIdEstado(), USUARIO_ESTADO_ACTIVO.getEstado());
+        //ENVIAR DATOS
+        myRef.child(String.valueOf(USUARIO_ESTADO_ACTIVO.getIdEstado())).setValue(estado_usuario);
+
+        //LLENAR DATOS
+        estado_usuario.setIdEstado(USUARIO_ESTADO_BAJA.getIdEstado());
+        estado_usuario.setEstado(USUARIO_ESTADO_BAJA.getEstado());
+        myRef.child(String.valueOf(USUARIO_ESTADO_BAJA.getIdEstado())).setValue(estado_usuario);
+
+    }
+
+    public void crearEstadoMesa(){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference(TBL_ESTADO_MESA);
+        //LLENAR DATOS
+        EstadoMesa estado_mesa = new EstadoMesa(ESTADO_MESA_DISPONIBLE.getIdEstadoMesa(),ESTADO_MESA_DISPONIBLE.getEstadoMesa());
+        myRef.child(String.valueOf(ESTADO_MESA_DISPONIBLE.getIdEstadoMesa())).setValue(estado_mesa);
+
+        estado_mesa.setIdEstadoMesa(ESTADO_MESA_OCUPADO.getIdEstadoMesa());
+        estado_mesa.setEstadoMesa(ESTADO_MESA_OCUPADO.getEstadoMesa());
+        myRef.child(String.valueOf(ESTADO_MESA_OCUPADO.getIdEstadoMesa())).setValue(estado_mesa);
+
     }
 
     public void crearUsuarioAdministrador(){

@@ -13,6 +13,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Pdm_alquilerMesasProyectoFinal">
         <activity
+            android:name=".EmpleadoMainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ConfirmarCredencialesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RegistroUsuariosAdministradoActivity"
+            android:exported="false"
+            android:parentActivityName=".AdministradorMainActivity" />
+        <activity
             android:name=".SinInternetActivity"
             android:exported="false" />
         <activity

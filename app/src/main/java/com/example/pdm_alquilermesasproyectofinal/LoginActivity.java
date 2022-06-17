@@ -118,6 +118,12 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    public void cargarEmpleadoMainActivity(){
+        Intent intent = new Intent(this, EmpleadoMainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
     public void validarUsuario(FirebaseUser user){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference(MainActivity.TBL_USUARIOS).child(user.getUid());
@@ -135,6 +141,8 @@ public class LoginActivity extends AppCompatActivity {
                         cargarAdministradorMainActivity();
                     }else if(usuario.getTipo().getIdTipoUsuario() == MainActivity.USUARIO_TIPO_CLIENTE.getIdTipoUsuario()){ //SI ES 1 = Cliente
                         cargarClienteMainActivity();
+                    }else if(usuario.getTipo().getIdTipoUsuario() == MainActivity.USUARIO_TIPO_EMPLEADO.getIdTipoUsuario()){
+                        cargarEmpleadoMainActivity();
                     }
                 }else{
                     Toast.makeText(LoginActivity.this, "La cuenta se encuentra inactiva", Toast.LENGTH_LONG).show();

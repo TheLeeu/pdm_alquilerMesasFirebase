@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class AdministradorMainActivity extends AppCompatActivity {
 
@@ -30,5 +31,28 @@ public class AdministradorMainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    public void cargarRegistroUsuariosAdministradorActivity(){
+        FirebaseUser user = mAuth.getCurrentUser();
+        Intent intent = new Intent(this, RegistroUsuariosAdministradoActivity.class);
+        startActivityForResult(intent,1);
+    }
+
+    public void btnRegistrarUsuarios(View view) {
+        cargarRegistroUsuariosAdministradorActivity();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode,
+                                 int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if (resultCode != RESULT_OK) {
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        }
     }
 }

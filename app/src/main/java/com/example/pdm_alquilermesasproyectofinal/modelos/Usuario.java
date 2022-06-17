@@ -6,10 +6,25 @@ public class Usuario {
     private int edad;
     private String foto;
     private String correo;
+    private String telefono;
     //ADMINISTRADOR, CLIENTE, EMPLEADO
     private TipoUsuario tipo;
     //USUARIO ACTIVO, USUARIO DE BAJA, BLOQUEADO, ETC
     private EstadoUsuario estado;
+
+    public Usuario() {
+    }
+
+    public Usuario(String nombre, String apellido, int edad, String foto, String correo, String telefono, TipoUsuario tipo, EstadoUsuario estado) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.edad = edad;
+        this.foto = foto;
+        this.correo = correo;
+        this.telefono = telefono;
+        this.tipo = tipo;
+        this.estado = estado;
+    }
 
     public String getNombre() {
         return nombre;
@@ -49,6 +64,14 @@ public class Usuario {
 
     public void setCorreo(String correo) {
         this.correo = correo;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
     }
 
     public TipoUsuario getTipo() {

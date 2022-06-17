@@ -27,4 +27,9 @@ public class TipoUsuario {
     public void setTipoUsuario(String tipoUsuario) {
         this.tipoUsuario = tipoUsuario;
     }
+
+    @Override
+    public String toString() {
+        return tipoUsuario;
+    }
 }

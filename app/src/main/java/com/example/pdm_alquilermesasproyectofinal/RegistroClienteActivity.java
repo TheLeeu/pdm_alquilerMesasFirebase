@@ -23,7 +23,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class RegistroClienteActivity extends AppCompatActivity {
-    private EditText et_nombre, et_apellido, et_edad, et_correo, et_contrasenia, et_contrasenia2;
+    private EditText et_nombre, et_apellido, et_edad, et_correo, et_contrasenia, et_contrasenia2, et_telefono;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +36,7 @@ public class RegistroClienteActivity extends AppCompatActivity {
         et_correo = (EditText) findViewById(R.id.etCorreoRegistroClienteActivity);
         et_contrasenia = (EditText) findViewById(R.id.etContraseniaRegistroClienteActivity);
         et_contrasenia2 = (EditText) findViewById(R.id.etContrasenia2RegistroClienteActivity);
+        et_telefono = (EditText) findViewById(R.id.etTelefonoRegistroClienteActivity);
     }
 
     public void registroCompleto(String correo, String contrasenia){
@@ -53,7 +54,8 @@ public class RegistroClienteActivity extends AppCompatActivity {
         && !et_edad.getText().toString().isEmpty()
         && !et_correo.getText().toString().isEmpty()
         && !et_contrasenia.getText().toString().isEmpty()
-        && !et_contrasenia2.getText().toString().isEmpty()){
+        && !et_contrasenia2.getText().toString().isEmpty()
+        && !et_telefono.getText().toString().isEmpty()){
             //VALIDAR QUE LAS CONTRASEÑAS SEAN IGUALES
             if(et_contrasenia.getText().toString().equals(et_contrasenia2.getText().toString())){
 
@@ -78,6 +80,7 @@ public class RegistroClienteActivity extends AppCompatActivity {
                                         usuario.setEdad(Integer.parseInt(et_edad.getText().toString()));
                                         usuario.setFoto(MainActivity.FOTO_USUARIOS_NUEVOS_DEFAULT);
                                         usuario.setCorreo(et_correo.getText().toString());
+                                        usuario.setTelefono(et_telefono.getText().toString());
 
                                         //PARA TIPO DE USUARIO
                                         TipoUsuario tipoU = new TipoUsuario();
