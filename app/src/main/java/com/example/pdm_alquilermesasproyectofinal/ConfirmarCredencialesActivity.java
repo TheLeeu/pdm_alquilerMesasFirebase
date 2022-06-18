@@ -26,19 +26,24 @@ public class ConfirmarCredencialesActivity extends AppCompatActivity {
     private String correo;
     private String correoNuevo;
     private String contraseniaNuevo;
+    private String tipoU;
     private EditText et_contrasenia;
     private boolean validoCredenciales = false;
+    private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirmar_credenciales);
-
+        // Initialize Firebase Auth
+        mAuth = FirebaseAuth.getInstance();
         et_contrasenia = (EditText)findViewById(R.id.etContraseniaConfirmarCredencialesActivity);
         correo = getIntent().getStringExtra("CORREO_USUARIO_ACTUAL");
         correoNuevo = getIntent().getStringExtra("CORREO_NUEVO");
         Log.d("CORREO",correoNuevo);
         contraseniaNuevo = getIntent().getStringExtra("CONTRASENIA_NUEVA");
         Log.d("CONTRA",contraseniaNuevo);
+        tipoU = getIntent().getStringExtra("TIPO_USUARIO");
+        Log.d("TIPO_USUARIO",tipoU);
 
     }
 
@@ -80,6 +85,25 @@ public class ConfirmarCredencialesActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         if(validoCredenciales == false){
+            mAuth.signInWithEmailAndPassword(correoNuevo,contraseniaNuevo)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if(task.isSuccessful()){
+                                FirebaseUser user = mAuth.getCurrentUser();
+                                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                                DatabaseReference myRef = database.getReference(MainActivity.TBL_USUARIOS);
+                                myRef.child(user.getUid()).removeValue();
+                                if(tipoU.equals(MainActivity.USUARIO_TIPO_EMPLEADO.getTipoUsuario())){
+                                    Log.d("ENTRA","SI");
+                                    DatabaseReference myRef1 = database.getReference(MainActivity.TBL_EMPLEADOS);
+                                    myRef1.child(user.getUid()).removeValue();
+                                }
+
+                                user.delete();
+                            }
+                        }
+                    });
             finish();
         }
     }

@@ -218,6 +218,7 @@ public class MainActivity extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference(TBL_USUARIOS);
         Usuario usuario = new Usuario();
+        usuario.setIdUsuario(user.getUid());
         usuario.setNombre("Administrador");
         usuario.setApellido("Administrador");
         usuario.setEdad(25);

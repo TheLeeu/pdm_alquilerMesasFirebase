@@ -71,10 +71,13 @@ public class RegistroClienteActivity extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if(task.isSuccessful()){
 
+                                        FirebaseUser user = myAuth.getCurrentUser();
+
                                         //ESCRIBIR DATOS DE USUARIO EN REALTIME DATABASE
                                         FirebaseDatabase database = FirebaseDatabase.getInstance();
                                         DatabaseReference myRef = database.getReference(MainActivity.TBL_USUARIOS);
                                         Usuario usuario = new Usuario();
+                                        usuario.setIdUsuario(user.getUid());
                                         usuario.setNombre(et_nombre.getText().toString());
                                         usuario.setApellido(et_apellido.getText().toString());
                                         usuario.setEdad(Integer.parseInt(et_edad.getText().toString()));
@@ -93,8 +96,6 @@ public class RegistroClienteActivity extends AppCompatActivity {
                                         estadoU.setIdEstado(MainActivity.USUARIO_ESTADO_ACTIVO.getIdEstado());
                                         estadoU.setEstado(MainActivity.USUARIO_ESTADO_ACTIVO.getEstado());
                                         usuario.setEstado(estadoU);
-
-                                        FirebaseUser user = myAuth.getCurrentUser();
 
                                         myRef.child(user.getUid()).setValue(usuario);
                                         //SE CIERRA SESION PORQUE AL CREAR EL USUARIO QUEDA LA SESION INICIA

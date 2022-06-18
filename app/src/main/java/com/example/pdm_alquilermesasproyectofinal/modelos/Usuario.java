@@ -1,6 +1,7 @@
 package com.example.pdm_alquilermesasproyectofinal.modelos;
 
 public class Usuario {
+    private String idUsuario;
     private String nombre;
     private String apellido;
     private int edad;
@@ -15,7 +16,8 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(String nombre, String apellido, int edad, String foto, String correo, String telefono, TipoUsuario tipo, EstadoUsuario estado) {
+    public Usuario(String idUsuario, String nombre, String apellido, int edad, String foto, String correo, String telefono, TipoUsuario tipo, EstadoUsuario estado) {
+        this.idUsuario = idUsuario;
         this.nombre = nombre;
         this.apellido = apellido;
         this.edad = edad;
@@ -24,6 +26,14 @@ public class Usuario {
         this.telefono = telefono;
         this.tipo = tipo;
         this.estado = estado;
+    }
+
+    public String getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(String idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
     public String getNombre() {

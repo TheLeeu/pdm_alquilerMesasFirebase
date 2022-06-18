@@ -74,6 +74,7 @@ public class RegistroUsuariosAdministradoActivity extends AppCompatActivity {
         sp_locales = (Spinner) findViewById(R.id.spLocalesRegistroAdministrador);
 
         sp_locales.setVisibility(View.INVISIBLE);
+        sp_locales.setEnabled(false);
 
         mA = FirebaseAuth.getInstance();
         FirebaseUser current = mA.getCurrentUser();
@@ -91,8 +92,12 @@ public class RegistroUsuariosAdministradoActivity extends AppCompatActivity {
                 tipoU.setTipoUsuario(listTipoUsuario.get(i).getTipoUsuario());
                 if(tipoU.getTipoUsuario().equals(MainActivity.USUARIO_TIPO_EMPLEADO.getTipoUsuario())){
                     sp_locales.setVisibility(View.VISIBLE);
+                    sp_locales.setEnabled(true);
+
                 }else{
                     sp_locales.setVisibility(View.INVISIBLE);
+                    sp_locales.setEnabled(false);
+
                 }
             }
 
@@ -211,9 +216,12 @@ public class RegistroUsuariosAdministradoActivity extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
 
+                                    FirebaseUser user = myAuth.getCurrentUser();
+
                                     FirebaseDatabase database = FirebaseDatabase.getInstance();
                                     DatabaseReference myRef = database.getReference(MainActivity.TBL_USUARIOS);
                                     Usuario usuario = new Usuario();
+                                    usuario.setIdUsuario(user.getUid());
                                     usuario.setNombre(et_nombre.getText().toString());
                                     usuario.setApellido(et_apellido.getText().toString());
                                     usuario.setEdad(Integer.parseInt(et_edad.getText().toString()));
@@ -227,8 +235,6 @@ public class RegistroUsuariosAdministradoActivity extends AppCompatActivity {
                                     //PARA ESTADO USUARIO
                                     usuario.setEstado(estadoU);
 
-                                    FirebaseUser user = myAuth.getCurrentUser();
-
                                     myRef.child(user.getUid()).setValue(usuario);
 
 
@@ -238,6 +244,7 @@ public class RegistroUsuariosAdministradoActivity extends AppCompatActivity {
                                         FirebaseDatabase databaseE = FirebaseDatabase.getInstance();
                                         DatabaseReference myRefE = database.getReference(MainActivity.TBL_EMPLEADOS);
                                         Empleado empleado = new Empleado();
+                                        empleado.setUsuario(usuario);
                                         empleado.setLocal(local);
                                         myRefE.child(user.getUid()).setValue(empleado);
                                     }
@@ -273,6 +280,7 @@ public class RegistroUsuariosAdministradoActivity extends AppCompatActivity {
         intent.putExtra("CORREO_USUARIO_ACTUAL",userActual);
         intent.putExtra("CORREO_NUEVO",user.getEmail());
         intent.putExtra("CONTRASENIA_NUEVA",contrasenia);
+        intent.putExtra("TIPO_USUARIO",tipoU.getTipoUsuario());
         startActivityForResult(intent,1);
     }
 
@@ -288,10 +296,6 @@ public class RegistroUsuariosAdministradoActivity extends AppCompatActivity {
                 setResult(RESULT_OK);
                 finish();
             }else{
-                userCreado.delete();
-                FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference myRef = database.getReference(MainActivity.TBL_USUARIOS);
-                myRef.child(userCreado.getUid()).removeValue();
                 finish();
             }
         }
