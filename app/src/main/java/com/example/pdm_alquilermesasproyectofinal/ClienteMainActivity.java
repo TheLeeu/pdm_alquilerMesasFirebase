@@ -26,9 +26,19 @@ public class ClienteMainActivity extends AppCompatActivity {
         cargarLoginActivity();
     }
 
+    public void btnLocales(View view){
+        cargarLocalesActivity();
+    }
+
+
     public void cargarLoginActivity(){
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    public void cargarLocalesActivity(){
+        Intent intent = new Intent(this, LocalesActivity.class);
+        startActivity(intent);
     }
 }
