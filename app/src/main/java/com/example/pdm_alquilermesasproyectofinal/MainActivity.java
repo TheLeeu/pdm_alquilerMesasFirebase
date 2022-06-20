@@ -34,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
     public static final String TBL_ESTADO_USUARIOS = "ESTADO_USUARIOS";
     public static final String TBL_LOCALES = "LOCALES";
     public static final String TBL_EMPLEADOS = "EMPLEADOS";
+    public static final String TBL_RESERVACIONES = "RESERVACIONES";
+    public static final String TBL_MESAS = "MESAS";
 
     public static final TipoUsuario USUARIO_TIPO_ADMINISTRADOR = new TipoUsuario(0,"Administrador");
     public static final TipoUsuario USUARIO_TIPO_CLIENTE = new TipoUsuario(1,"Cliente");

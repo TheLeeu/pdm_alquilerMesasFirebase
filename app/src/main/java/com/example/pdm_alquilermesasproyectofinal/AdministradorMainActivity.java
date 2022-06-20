@@ -55,4 +55,12 @@ public class AdministradorMainActivity extends AppCompatActivity {
             }
         }
     }
+
+    public void btnPruebas(View view) {
+        cargarCRUDReservasActivity();
+    }
+    public void cargarCRUDReservasActivity(){
+        Intent intent = new Intent(this, CRUDReservasActivity.class);
+        startActivity(intent);
+    }
 }
