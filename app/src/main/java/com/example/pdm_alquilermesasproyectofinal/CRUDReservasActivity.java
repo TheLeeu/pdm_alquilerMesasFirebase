@@ -72,6 +72,8 @@ public class CRUDReservasActivity extends AppCompatActivity {
 
         et_precio.setEnabled(false);
         et_fecha.setEnabled(false);
+        sp_horaEntrada.setEnabled(false);
+        sp_horaSalida.setEnabled(false);
 
         listLocales = new ArrayList<>();
         listMesas = new ArrayList<>();
@@ -301,6 +303,9 @@ public class CRUDReservasActivity extends AppCompatActivity {
             public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
                 et_fecha.setText(i2 + "/" + (i1+1) + "/" + i);
 
+                sp_horaEntrada.setEnabled(true);
+                sp_horaSalida.setEnabled(true);
+
 
                 ArrayList<Reservacion> listReservacionesDelDia = new ArrayList<>();
                 //recorrer la lista de reservaciones y filtrarlas por la fecha seleccionada
@@ -372,15 +377,6 @@ public class CRUDReservasActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
-                FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference myRef = database.getReference(MainActivity.TBL_MESAS);
-
-                EstadoMesa estado = new EstadoMesa(MainActivity.ESTADO_MESA_OCUPADO.getIdEstadoMesa(),MainActivity.ESTADO_MESA_OCUPADO.getEstadoMesa());
-
-                mesaSeleccionada.setEstado(estado);
-
-                myRef.child(mesaSeleccionada.getIdMesa()).setValue(mesaSeleccionada);
-
                 DatabaseReference r = FirebaseDatabase.getInstance().getReference(MainActivity.TBL_PAGOS).child(data.getStringExtra("ID_PAGO"));
                 r.addValueEventListener(getPago);
             }
