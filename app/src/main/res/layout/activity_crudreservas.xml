@@ -37,18 +37,6 @@
         app:layout_constraintTop_toBottomOf="@+id/spLocalesCRUDReservasActivity" />
 
     <EditText
-        android:id="@+id/etHoraSalidaCRUDReservasActivity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:ems="10"
-        android:hint="hora de salida"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etHoraEntradaCRUDReservasActivity" />
-
-    <EditText
         android:id="@+id/etFechaCRUDReservasActivity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -67,40 +55,9 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:text=">"
+        android:onClick="btnFecha"
         app:layout_constraintStart_toEndOf="@+id/etFechaCRUDReservasActivity"
         app:layout_constraintTop_toBottomOf="@+id/etPrecioCRUDReservasActivity" />
-
-    <Button
-        android:id="@+id/button20"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:text=">"
-        app:layout_constraintStart_toEndOf="@+id/etHoraSalidaCRUDReservasActivity"
-        app:layout_constraintTop_toBottomOf="@+id/etHoraEntradaCRUDReservasActivity" />
-
-    <EditText
-        android:id="@+id/etHoraEntradaCRUDReservasActivity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:ems="10"
-        android:hint="hora de entrada"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etFechaCRUDReservasActivity" />
-
-    <Button
-        android:id="@+id/button19"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:text=">"
-        app:layout_constraintStart_toEndOf="@+id/etHoraEntradaCRUDReservasActivity"
-        app:layout_constraintTop_toBottomOf="@+id/etFechaCRUDReservasActivity" />
 
     <TextView
         android:id="@+id/textView14"
@@ -110,7 +67,7 @@
         android:text="idDePago"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etHoraSalidaCRUDReservasActivity" />
+        app:layout_constraintTop_toBottomOf="@+id/spHoraSalidaCRUDReservasActivity" />
 
     <EditText
         android:id="@+id/etPrecioCRUDReservasActivity"
@@ -125,11 +82,12 @@
         app:layout_constraintTop_toBottomOf="@+id/spMesasCRUDReservasActivity" />
 
     <Button
-        android:id="@+id/button21"
+        android:id="@+id/btnReservarCRUDReservasActivity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="RESERVAR"
+        android:onClick="btnReservar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView14" />
@@ -138,9 +96,36 @@
         android:id="@+id/spLocalesCRUDReservasActivity"
         android:layout_width="391dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
         android:minHeight="48dp"
-        app:layout_constraintTop_toBottomOf="@+id/textView13"
-        tools:layout_editor_absoluteX="10dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView13" />
+
+    <Spinner
+        android:id="@+id/spHoraEntradaCRUDReservasActivity"
+        android:layout_width="409dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etFechaCRUDReservasActivity" />
+
+    <Spinner
+        android:id="@+id/spHoraSalidaCRUDReservasActivity"
+        android:layout_width="409dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spHoraEntradaCRUDReservasActivity" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
