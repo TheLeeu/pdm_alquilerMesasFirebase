@@ -13,6 +13,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Pdm_alquilerMesasProyectoFinal">
         <activity
+            android:name=".PagoReservaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CRUDReservasActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ListaReservasActivity"
+            android:exported="false" />
+        <activity
             android:name=".LocalesActivity"
             android:exported="false" />
         <activity
