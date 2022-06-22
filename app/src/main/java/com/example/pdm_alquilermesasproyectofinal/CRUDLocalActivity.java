@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -39,6 +41,7 @@ public class CRUDLocalActivity extends AppCompatActivity {
     public FirebaseStorage storage;
     public StorageReference reference;
     private int idLocal;
+    private int idRegistrado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,6 +128,7 @@ public class CRUDLocalActivity extends AppCompatActivity {
             local.setFoto(foto);
 
             myRef.child(String.valueOf(nuevoId)).setValue(local);
+            idRegistrado = (int) nuevoId;
             Toast.makeText(this, "nuevo local registrado", Toast.LENGTH_SHORT).show();
             finish();
         }else{
@@ -197,4 +201,24 @@ public class CRUDLocalActivity extends AppCompatActivity {
         //remover las demas referencias de las tablas donde aparesca un local
 
     }
+
+    public void abrirDialogo(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Desea agregarle datos a su local? Como:")
+                .setItems(new String[]{"Mesas", "Horarios de atención"}, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // The 'which' argument contains the index position
+                        // of the selected item
+                        switch (which){
+                            case 0:
+                                Intent intent = new Intent(getApplicationContext(), CRUDMesasActivity.class);
+                                intent.putExtra("idLocal", String.valueOf(idRegistrado));
+                                startActivity(intent);
+                                break;
+
+                        }
+                    }
+                }).show();
+    }
+
 }
