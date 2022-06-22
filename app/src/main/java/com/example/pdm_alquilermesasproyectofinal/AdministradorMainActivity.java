@@ -63,4 +63,13 @@ public class AdministradorMainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, CRUDReservasActivity.class);
         startActivity(intent);
     }
+
+    public void btnLocales(View view) {
+        cargarListaLocalesActivity();
+    }
+
+    public void cargarListaLocalesActivity(){
+        Intent intent = new Intent(this, ListaLocalesActivity.class);
+        startActivity(intent);
+    }
 }
