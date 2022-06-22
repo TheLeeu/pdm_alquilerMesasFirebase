@@ -82,7 +82,6 @@ public class CRUDReservasActivity extends AppCompatActivity {
         listHorarioAtencion = new ArrayList<>();
         ref = FirebaseDatabase.getInstance().getReference();
         ref.child(MainActivity.TBL_LOCALES).addValueEventListener(cargarLocales);
-        ref.child(MainActivity.TBL_MESAS).addValueEventListener(cargarMesas);
         ref.child(MainActivity.TBL_HORARIOS_ATENCION).addValueEventListener(getHorariosAtencion);
         ref.child(MainActivity.TBL_RESERVACIONES).addValueEventListener(getReservaciones);
 
@@ -102,12 +101,15 @@ public class CRUDReservasActivity extends AppCompatActivity {
             }
         });
 
-        //CARGAR PRECIO DE RESERVACION DE CADA MES CUANDO SE SELECCIONE EN EL SPINNER
-        sp_mesas.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+
+        //CAPTURAR ID DE LOCAL AL SELECCIONAR UNO EN SPINNER Y SUS HORARIOS
+        sp_locales.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                mesaSeleccionada = listMesas.get(i);
-                et_precio.setText(String.valueOf(listMesas.get(i).getPrecioReserva()));
+                idLocalSeleccionado = listLocales.get(i).getIdLocal();
+                ref.child(MainActivity.TBL_MESAS).addValueEventListener(cargarMesas);
+
             }
 
             @Override
@@ -116,11 +118,12 @@ public class CRUDReservasActivity extends AppCompatActivity {
             }
         });
 
-        //CAPTURAR ID DE LOCAL AL SELECCIONAR UNO EN SPINNER Y SUS HORARIOS
-        sp_locales.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        //CARGAR PRECIO DE RESERVACION DE CADA MES CUANDO SE SELECCIONE EN EL SPINNER
+        sp_mesas.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                idLocalSeleccionado = listLocales.get(i).getIdLocal();
+                mesaSeleccionada = listMesas.get(i);
+                et_precio.setText(String.valueOf(listMesas.get(i).getPrecioReserva()));
             }
 
             @Override
@@ -266,6 +269,7 @@ public class CRUDReservasActivity extends AppCompatActivity {
     public ValueEventListener cargarMesas = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot snapshot) {
+            listMesas.clear();
             if(snapshot.exists()){
                 for (DataSnapshot items: snapshot.getChildren()){
                     Mesas mesa = items.getValue(Mesas.class);
@@ -277,6 +281,12 @@ public class CRUDReservasActivity extends AppCompatActivity {
                 }
                 ArrayAdapter<Mesas> adapter = new ArrayAdapter<>(CRUDReservasActivity.this, android.R.layout.simple_dropdown_item_1line, listMesas);
                 sp_mesas.setAdapter(adapter);
+                if(listMesas.size() > 0){
+                    sp_mesas.setEnabled(true);
+                }else{
+                    sp_mesas.setEnabled(false);
+                    Toast.makeText(CRUDReservasActivity.this, "Este local no dispone de mesas para reservar", Toast.LENGTH_LONG).show();
+                }
                 //VERIFICAR SI HAY MESAS DISPONIBLES PARA ALQUILAR SINO OCULTAR BOTON DE RESERVA
                 if(listMesas.size() > 0){
                     btn_reservas.setEnabled(true);

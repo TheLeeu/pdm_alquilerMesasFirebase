@@ -3,8 +3,13 @@ package com.example.pdm_alquilermesasproyectofinal;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.pdm_alquilermesasproyectofinal.adaptadores.AdaptadorLocal;
@@ -23,6 +28,7 @@ public class ListaLocalesActivity extends AppCompatActivity {
     public FirebaseDatabase database;
     public DatabaseReference referenciaData;
     private ListView lv_locales;
+    private int posicionItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +41,14 @@ public class ListaLocalesActivity extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         referenciaData = database.getReference();
         referenciaData.child(MainActivity.TBL_LOCALES).addValueEventListener(cargarLocales);
+
+        lv_locales.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                posicionItem = i;
+                abrirDialogo();
+            }
+        });
     }
 
     public ValueEventListener cargarLocales = new ValueEventListener() {
@@ -64,5 +78,46 @@ public class ListaLocalesActivity extends AppCompatActivity {
     }
 
     public void btnAgregar(View view) {
+        cargarCRUDLocalActivity("btnAgregar");
     }
+
+    public void cargarCRUDLocalActivity(String elemento){
+        Intent intent = new Intent(this, CRUDLocalActivity.class);
+        if(elemento.equals("btnAgregar")){
+            intent.putExtra("ListaLocalesActivity", elemento);
+            startActivity(intent);
+        }else if(elemento.equals("item")){
+            intent.putExtra("ListaLocalesActivity", elemento);
+            intent.putExtra("idLocal", String.valueOf(listLocal.get(posicionItem).getIdLocal()));
+            intent.putExtra("nombre", listLocal.get(posicionItem).getNombre());
+            intent.putExtra("direccion",listLocal.get(posicionItem).getDireccion());
+            intent.putExtra("telefono", listLocal.get(posicionItem).getTelefono());
+            intent.putExtra("coordenadas", listLocal.get(posicionItem).getCoordenadasGps());
+            intent.putExtra("foto", listLocal.get(posicionItem).getFoto());
+            startActivity(intent);
+        }
+
+
+
+    }
+
+    public void abrirDialogo(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Seleccione una opcion")
+                .setItems(new String[]{"Modificar datos de local", "Horarios de atención", "Mesas de local",
+                "Empleados de local", "Reservas de local"}, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // The 'which' argument contains the index position
+                        // of the selected item
+                        Log.d("which", String.valueOf(which));
+                        switch (which){
+                            case 0:
+                                cargarCRUDLocalActivity("item");
+                                break;
+
+                        }
+                    }
+                }).show();
+    }
+
 }

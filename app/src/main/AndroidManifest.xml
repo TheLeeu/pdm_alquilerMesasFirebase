@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Pdm_alquilerMesasProyectoFinal">
         <activity
+            android:name=".CRUDLocalActivity"
+            android:exported="false" />
+        <activity
             android:name=".ListaLocalesActivity"
             android:exported="false" />
         <activity
