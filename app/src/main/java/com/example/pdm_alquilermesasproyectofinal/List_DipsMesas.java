@@ -33,7 +33,6 @@ public class List_DipsMesas extends AppCompatActivity {
     public ArrayList<Mesas> arrayListMesa;
     Empleado empleado = new Empleado();
     public ListView listaMesa;
-    public String LocalEmp = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,8 +97,6 @@ public class List_DipsMesas extends AppCompatActivity {
 
                 for (DataSnapshot items : snapshot.getChildren()) {
                     Mesas mesa = items.getValue(Mesas.class);
-
-                    Log.d("Local Empleado ", empleado.getLocal().getNombre());
 
                     if (mesa.getLocal().getNombre().equals(empleado.getLocal().getNombre())){
 
