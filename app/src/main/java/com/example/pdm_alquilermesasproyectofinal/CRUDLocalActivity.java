@@ -130,7 +130,7 @@ public class CRUDLocalActivity extends AppCompatActivity {
             myRef.child(String.valueOf(nuevoId)).setValue(local);
             idRegistrado = (int) nuevoId;
             Toast.makeText(this, "nuevo local registrado", Toast.LENGTH_SHORT).show();
-            finish();
+            abrirDialogo();
         }else{
             Toast.makeText(this, "Debe llenar todos los campos", Toast.LENGTH_SHORT).show();
         }
@@ -212,8 +212,15 @@ public class CRUDLocalActivity extends AppCompatActivity {
                         switch (which){
                             case 0:
                                 Intent intent = new Intent(getApplicationContext(), CRUDMesasActivity.class);
+                                intent.putExtra("ACTIVITY", "CRUDLocalActivity");
                                 intent.putExtra("idLocal", String.valueOf(idRegistrado));
+                                intent.putExtra("nombreLocal", et_nombre.getText().toString());
+                                intent.putExtra("direccionLocal", et_direccion.getText().toString());
+                                intent.putExtra("telefonoLocal", et_telefono.getText().toString());
+                                intent.putExtra("coordenadasLocal", et_coordenadas.getText().toString());
+                                intent.putExtra("fotoLocal", foto);
                                 startActivity(intent);
+                                finish();
                                 break;
 
                         }

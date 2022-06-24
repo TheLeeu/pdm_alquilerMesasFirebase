@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.pdm_alquilermesasproyectofinal.adaptadores.AdaptadorLocal;
 import com.example.pdm_alquilermesasproyectofinal.modelos.Local;
@@ -35,7 +36,7 @@ public class ListaLocalesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_locales);
 
-        lv_locales = (ListView)findViewById(R.id.listLocales);
+        lv_locales = (ListView)findViewById(R.id.listMesas);
 
         listLocal = new ArrayList<Local>();
         database = FirebaseDatabase.getInstance();
@@ -114,7 +115,26 @@ public class ListaLocalesActivity extends AppCompatActivity {
                             case 0:
                                 cargarCRUDLocalActivity("item");
                                 break;
-
+                            case 1:
+                                Toast.makeText(ListaLocalesActivity.this, "falta programar", Toast.LENGTH_SHORT).show();
+                                break;
+                            case 2:
+                                Intent intent = new Intent(getApplicationContext(), ListaMesasActivity.class);
+                                intent.putExtra("ACTIVITY", "ListaLocalesActivity");
+                                intent.putExtra("idLocal", String.valueOf(listLocal.get(posicionItem).getIdLocal()));
+                                intent.putExtra("nombreLocal", listLocal.get(posicionItem).getNombre());
+                                intent.putExtra("direccionLocal", listLocal.get(posicionItem).getDireccion());
+                                intent.putExtra("telefonoLocal", listLocal.get(posicionItem).getTelefono());
+                                intent.putExtra("coordenadasLocal", listLocal.get(posicionItem).getCoordenadasGps());
+                                intent.putExtra("fotoLocal", listLocal.get(posicionItem).getFoto());
+                                startActivity(intent);
+                                break;
+                            case 3:
+                                Toast.makeText(ListaLocalesActivity.this, "falta programar", Toast.LENGTH_SHORT).show();
+                                break;
+                            case 4:
+                                Toast.makeText(ListaLocalesActivity.this, "falta programar", Toast.LENGTH_SHORT).show();
+                                break;
                         }
                     }
                 }).show();
