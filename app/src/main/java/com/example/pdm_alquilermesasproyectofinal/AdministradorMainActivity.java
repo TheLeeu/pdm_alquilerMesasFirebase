@@ -61,6 +61,7 @@ public class AdministradorMainActivity extends AppCompatActivity {
     }
     public void cargarCRUDReservasActivity(){
         Intent intent = new Intent(this, CRUDReservasActivity.class);
+        intent.putExtra("ACTIVITY", "AdministradorMainActivity");
         startActivity(intent);
     }
 

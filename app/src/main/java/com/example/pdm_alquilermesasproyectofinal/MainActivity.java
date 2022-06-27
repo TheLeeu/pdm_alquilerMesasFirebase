@@ -51,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
     public static final EstadoUsuario USUARIO_ESTADO_BAJA = new EstadoUsuario(1,"Baja");
     public static final String ERROR_INTERNET_FIREBASE = "com.google.firebase.FirebaseNetworkException: A network error (such as timeout, interrupted connection or unreachable host) has occurred.";
     public static final String FOTO_USUARIOS_NUEVOS_DEFAULT = "https://firebasestorage.googleapis.com/v0/b/pdmalquilermesasproyectofinal.appspot.com/o/perfil.png?alt=media&token=62e07752-76cc-4cad-9ca8-1aef18598b4e";
+    public static final String FOTO_LOCAL_NUEVO_DEFAULT = "https://firebasestorage.googleapis.com/v0/b/pdmalquilermesasproyectofinal.appspot.com/o/local.png?alt=media&token=975e0635-11da-48fb-abb3-04b0fead8591";
+    public static final String FOTO_MESA_NUEVO_DEFAULT = "https://firebasestorage.googleapis.com/v0/b/pdmalquilermesasproyectofinal.appspot.com/o/mesa.png?alt=media&token=fd8ac3da-4071-4265-bac3-b685e7809947";
     public static final EstadoMesa ESTADO_MESA_DISPONIBLE = new EstadoMesa(0,"Disponible");
     public static final EstadoMesa ESTADO_MESA_OCUPADO = new EstadoMesa(1, "Ocupado");
 

@@ -1,5 +1,7 @@
 package com.example.pdm_alquilermesasproyectofinal.modelos;
 
+import androidx.annotation.NonNull;
+
 public class EstadoMesa {
     private int idEstadoMesa;
     private String estadoMesa;
@@ -26,5 +28,11 @@ public class EstadoMesa {
 
     public void setEstadoMesa(String estadoMesa) {
         this.estadoMesa = estadoMesa;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return estadoMesa;
     }
 }

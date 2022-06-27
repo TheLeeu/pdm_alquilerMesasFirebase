@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CRUDHorariosAtencionActivity">
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <CheckBox
+            android:id="@+id/cbLunes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Lunes" />
+
+        <CheckBox
+            android:id="@+id/cbMartes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Martes" />
+
+        <CheckBox
+            android:id="@+id/cbMiercoles"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Miercoles" />
+
+        <CheckBox
+            android:id="@+id/cbJueves"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Jueves" />
+
+        <CheckBox
+            android:id="@+id/cbViernes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Viernes" />
+
+        <CheckBox
+            android:id="@+id/cbSabado"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sabado" />
+
+        <CheckBox
+            android:id="@+id/cbDomingo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Domingo" />
+    </LinearLayout>
+
+    <Spinner
+        android:id="@+id/spHoraAperturaCRUDHorariosAtencion"
+        android:layout_width="391dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+    <Spinner
+        android:id="@+id/spHoraCierreCRUDHorariosAtencion"
+        android:layout_width="391dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spHoraAperturaCRUDHorariosAtencion" />
+
+    <Button
+        android:id="@+id/btnAgregarCRUDHorariosAtencion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Agregar"
+        android:onClick="btnAgregar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spHoraCierreCRUDHorariosAtencion" />
+
+    <Button
+        android:id="@+id/btnModificarCRUDHorariosAtencion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:onClick="modificar"
+        android:text="Modificar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spHoraCierreCRUDHorariosAtencion" />
+
+    <Button
+        android:id="@+id/btnEliminarCRUDHorariosAtencion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="eliminar"
+        android:onClick="btnEliminar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnAgregarCRUDHorariosAtencion" />
+</androidx.constraintlayout.widget.ConstraintLayout>
