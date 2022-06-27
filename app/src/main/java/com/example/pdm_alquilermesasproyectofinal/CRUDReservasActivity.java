@@ -301,7 +301,20 @@ public class CRUDReservasActivity extends AppCompatActivity {
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                et_fecha.setText(i2 + "/" + (i1+1) + "/" + i);
+                String d = "";
+                String m = "";
+                if(i2 < 10){
+                    d = "0" + i2;
+                }else{
+                    d = String.valueOf(i2);
+                }
+                if((i1+1) < 10){
+                    m = "0" + (i1+1);
+                }else{
+                    m = String.valueOf(i1+1);
+                }
+                et_fecha.setText(d + "/" + m + "/" + i);
+
 
                 sp_horaEntrada.setEnabled(true);
                 sp_horaSalida.setEnabled(true);
