@@ -11,11 +11,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import com.example.pdm_alquilermesasproyectofinal.adaptadores.AdaptadorLocal;
 import com.example.pdm_alquilermesasproyectofinal.modelos.AdaptadorMesa;
-import com.example.pdm_alquilermesasproyectofinal.modelos.Local;
 import com.example.pdm_alquilermesasproyectofinal.modelos.Mesas;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -46,7 +43,7 @@ public class ListaMesasActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_mesas);
 
-        lv_mesas = (ListView) findViewById(R.id.listMesas);
+        lv_mesas = (ListView) findViewById(R.id.listHorariosAtencion);
 
         listMesa = new ArrayList<>();
 
@@ -143,7 +140,23 @@ public class ListaMesasActivity extends AppCompatActivity {
                                 startActivity(intent);
                                 break;
                             case 1:
-                                Toast.makeText(ListaMesasActivity.this, "falta programar", Toast.LENGTH_SHORT).show();
+                                Intent i = new Intent(getApplicationContext(), CRUDReservasActivity.class);
+                                i.putExtra("ACTIVITY", "ListaMesasActivity");
+                                i.putExtra("idMesa", listMesa.get(itemSeleccionado).getIdMesa());
+                                i.putExtra("capacidadMesa", String.valueOf(listMesa.get(itemSeleccionado).getCapacidad()));
+                                i.putExtra("idEstadoMesa", String.valueOf(listMesa.get(itemSeleccionado).getEstado().getIdEstadoMesa()));
+                                i.putExtra("estadoMesa", listMesa.get(itemSeleccionado).getEstado().getEstadoMesa());
+                                i.putExtra("numeroMesa", String.valueOf(listMesa.get(itemSeleccionado).getNumeroMesa()));
+                                i.putExtra("precioMesa", String.valueOf(listMesa.get(itemSeleccionado).getPrecioReserva()));
+                                i.putExtra("fotoMesa", listMesa.get(itemSeleccionado).getFoto());
+
+                                i.putExtra("idLocal", String.valueOf(idLocal));
+                                i.putExtra("nombreLocal", nombreLocal);
+                                i.putExtra("direccionLocal", direccionLocal);
+                                i.putExtra("telefonoLocal", telefonoLocal);
+                                i.putExtra("coordenadasLocal", coordenadasLocal);
+                                i.putExtra("fotoLocal", fotoLocal);
+                                startActivity(i);
                                 break;
                         }
                     }

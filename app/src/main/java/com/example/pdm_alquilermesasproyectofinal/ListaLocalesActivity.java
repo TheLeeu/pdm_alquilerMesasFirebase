@@ -36,7 +36,7 @@ public class ListaLocalesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_locales);
 
-        lv_locales = (ListView)findViewById(R.id.listMesas);
+        lv_locales = (ListView)findViewById(R.id.listHorariosAtencion);
 
         listLocal = new ArrayList<Local>();
         database = FirebaseDatabase.getInstance();
@@ -116,7 +116,15 @@ public class ListaLocalesActivity extends AppCompatActivity {
                                 cargarCRUDLocalActivity("item");
                                 break;
                             case 1:
-                                Toast.makeText(ListaLocalesActivity.this, "falta programar", Toast.LENGTH_SHORT).show();
+                                Intent i = new Intent(getApplicationContext(), ListaHorariosAtencionActivity.class);
+                                i.putExtra("ACTIVITY", "ListaLocalesActivity");
+                                i.putExtra("idLocal", String.valueOf(listLocal.get(posicionItem).getIdLocal()));
+                                i.putExtra("nombreLocal", listLocal.get(posicionItem).getNombre());
+                                i.putExtra("direccionLocal", listLocal.get(posicionItem).getDireccion());
+                                i.putExtra("telefonoLocal", listLocal.get(posicionItem).getTelefono());
+                                i.putExtra("coordenadasLocal", listLocal.get(posicionItem).getCoordenadasGps());
+                                i.putExtra("fotoLocal", listLocal.get(posicionItem).getFoto());
+                                startActivity(i);
                                 break;
                             case 2:
                                 Intent intent = new Intent(getApplicationContext(), ListaMesasActivity.class);

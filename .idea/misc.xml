@@ -6,12 +6,14 @@
         <entry key="..\:/Users/arand/AndroidStudioProjects/pdm_alquilerMesasProyectoFinal/app/src/main/res/layout/activity_administrador_main.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/arand/AndroidStudioProjects/pdm_alquilerMesasProyectoFinal/app/src/main/res/layout/activity_cliente_main.xml" value="0.33" />
         <entry key="..\:/Users/arand/AndroidStudioProjects/pdm_alquilerMesasProyectoFinal/app/src/main/res/layout/activity_confirmar_credenciales.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/arand/AndroidStudioProjects/pdm_alquilerMesasProyectoFinal/app/src/main/res/layout/activity_crudhorarios_atencion.xml" value="0.33" />
         <entry key="..\:/Users/arand/AndroidStudioProjects/pdm_alquilerMesasProyectoFinal/app/src/main/res/layout/activity_crudlocal.xml" value="0.25" />
         <entry key="..\:/Users/arand/AndroidStudioProjects/pdm_alquilerMesasProyectoFinal/app/src/main/res/layout/activity_crudmesas.xml" value="0.25" />
-        <entry key="..\:/Users/arand/AndroidStudioProjects/pdm_alquilerMesasProyectoFinal/app/src/main/res/layout/activity_crudreservas.xml" value="0.25" />
+        <entry key="..\:/Users/arand/AndroidStudioProjects/pdm_alquilerMesasProyectoFinal/app/src/main/res/layout/activity_crudreservas.xml" value="0.33" />
         <entry key="..\:/Users/arand/AndroidStudioProjects/pdm_alquilerMesasProyectoFinal/app/src/main/res/layout/activity_empleado_main.xml" value="0.33" />
         <entry key="..\:/Users/arand/AndroidStudioProjects/pdm_alquilerMesasProyectoFinal/app/src/main/res/layout/activity_list_dips_mesas.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/arand/AndroidStudioProjects/pdm_alquilerMesasProyectoFinal/app/src/main/res/layout/activity_list_reservaciones.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/arand/AndroidStudioProjects/pdm_alquilerMesasProyectoFinal/app/src/main/res/layout/activity_lista_horarios_atencion.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/arand/AndroidStudioProjects/pdm_alquilerMesasProyectoFinal/app/src/main/res/layout/activity_lista_locales.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/arand/AndroidStudioProjects/pdm_alquilerMesasProyectoFinal/app/src/main/res/layout/activity_lista_mesas.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/arand/AndroidStudioProjects/pdm_alquilerMesasProyectoFinal/app/src/main/res/layout/activity_lista_reservas.xml" value="0.20416666666666666" />
@@ -23,6 +25,7 @@
         <entry key="..\:/Users/arand/AndroidStudioProjects/pdm_alquilerMesasProyectoFinal/app/src/main/res/layout/activity_registro_usuarios_administrado.xml" value="0.33" />
         <entry key="..\:/Users/arand/AndroidStudioProjects/pdm_alquilerMesasProyectoFinal/app/src/main/res/layout/activity_sin_internet.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/arand/AndroidStudioProjects/pdm_alquilerMesasProyectoFinal/app/src/main/res/layout/dialog_confirmar.xml" value="0.4083333333333333" />
+        <entry key="..\:/Users/arand/AndroidStudioProjects/pdm_alquilerMesasProyectoFinal/app/src/main/res/layout/item_horarios_atencion.xml" value="0.25" />
         <entry key="..\:/Users/arand/AndroidStudioProjects/pdm_alquilerMesasProyectoFinal/app/src/main/res/layout/item_local.xml" value="0.5" />
         <entry key="..\:/Users/arand/AndroidStudioProjects/pdm_alquilerMesasProyectoFinal/app/src/main/res/layout/item_mesa.xml" value="0.33" />
       </map>

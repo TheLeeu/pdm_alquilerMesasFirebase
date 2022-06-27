@@ -54,6 +54,14 @@ public class CRUDReservasActivity extends AppCompatActivity {
     private String diaElegido = "";
     private Pago pago = new Pago();
     private ArrayList<Reservacion> listReservaciones;
+    private int idLocal;
+    private String nombreLocal;
+    private String direccionLocal;
+    private String telefonoLocal;
+    private String coordenadasLocal;
+    private String fotoLocal;
+    private Local local;
+    private Mesas mesa;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,7 +90,6 @@ public class CRUDReservasActivity extends AppCompatActivity {
         listHorarioAtencion = new ArrayList<>();
         ref = FirebaseDatabase.getInstance().getReference();
         ref.child(MainActivity.TBL_LOCALES).addValueEventListener(cargarLocales);
-        ref.child(MainActivity.TBL_HORARIOS_ATENCION).addValueEventListener(getHorariosAtencion);
         ref.child(MainActivity.TBL_RESERVACIONES).addValueEventListener(getReservaciones);
 
         //PARA CAPTURAR CUANTAS RESERVACIONES SE HAN HECHO Y TOMAR EL VALOR DEL ID PARA EL NUEVO REGISTRO
@@ -109,6 +116,7 @@ public class CRUDReservasActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 idLocalSeleccionado = listLocales.get(i).getIdLocal();
                 ref.child(MainActivity.TBL_MESAS).addValueEventListener(cargarMesas);
+                ref.child(MainActivity.TBL_HORARIOS_ATENCION).addValueEventListener(getHorariosAtencion);
 
             }
 
@@ -146,6 +154,25 @@ public class CRUDReservasActivity extends AppCompatActivity {
             }
         });
 
+        if(getIntent().getStringExtra("ACTIVITY").equals("ListaMesasActivity")){
+
+            idLocal = Integer.parseInt(getIntent().getStringExtra("idLocal"));
+            nombreLocal = getIntent().getStringExtra("nombreLocal");
+            direccionLocal = getIntent().getStringExtra("direccionLocal");
+            telefonoLocal = getIntent().getStringExtra("telefonoLocal");
+            coordenadasLocal = getIntent().getStringExtra("coordenadasLocal");
+            fotoLocal = getIntent().getStringExtra("fotoLocal");
+
+            local = new Local(idLocal, nombreLocal, direccionLocal, telefonoLocal, coordenadasLocal, fotoLocal);
+            EstadoMesa estado = new EstadoMesa(Integer.parseInt(getIntent().getStringExtra("idEstadoMesa")),getIntent().getStringExtra("estadoMesa"));
+            mesa = new Mesas(getIntent().getStringExtra("idMesa"), Integer.parseInt(getIntent().getStringExtra("capacidadMesa")),
+                    estado, local, Integer.parseInt(getIntent().getStringExtra("numeroMesa")), Double.parseDouble(getIntent().getStringExtra("precioMesa")),
+                    getIntent().getStringExtra("fotoMesa"));
+
+
+            sp_mesas.setEnabled(false);
+            sp_locales.setEnabled(false);
+        }
 
     }
 
@@ -161,6 +188,16 @@ public class CRUDReservasActivity extends AppCompatActivity {
                 }
                 ArrayAdapter<Local> adapter = new ArrayAdapter<>(CRUDReservasActivity.this, android.R.layout.simple_dropdown_item_1line, listLocales);
                 sp_locales.setAdapter(adapter);
+
+                if(getIntent().getStringExtra("ACTIVITY").equals("ListaMesasActivity")){
+                    for(int i = 0; i < listLocales.size(); i++){
+                        if(String.valueOf(listLocales.get(i).getIdLocal()).equals(String.valueOf(local.getIdLocal()))){
+                            sp_locales.setSelection(i);
+                            break;
+                        }
+                    }
+                }
+
             }
         }
 
@@ -174,6 +211,7 @@ public class CRUDReservasActivity extends AppCompatActivity {
         @Override
         public void onDataChange(@NonNull DataSnapshot snapshot) {
             if(snapshot.exists()){
+                listHorarioAtencion.clear();
                 for(DataSnapshot items: snapshot.getChildren()){
                     HorarioAtencion horarioA = items.getValue(HorarioAtencion.class);
                     if(horarioA.getLocal().getIdLocal() == idLocalSeleccionado) {
@@ -238,13 +276,28 @@ public class CRUDReservasActivity extends AppCompatActivity {
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(CRUDReservasActivity.this, android.R.layout.simple_dropdown_item_1line, listHoras);
         sp_horaEntrada.setAdapter(adapter);
+
+        if(listHoras.size() > 0){
+            sp_horaEntrada.setEnabled(true);
+            sp_horaSalida.setEnabled(true);
+            btn_reservas.setEnabled(true);
+        }else{
+            sp_horaEntrada.setEnabled(false);
+            sp_horaSalida.setEnabled(false);
+            btn_reservas.setEnabled(false);
+        }
     }
 
     public void cargarHorasSalida(int inicio){
         ArrayList<String> listHoras2 = new ArrayList<>();
-        for(int i = inicio; i < listHoras.size(); i++){
-            listHoras2.add(listHoras.get(i));
+        if(listHoras.size() > 0){
+            for(int i = inicio; i < listHoras.size(); i++){
+                listHoras2.add(listHoras.get(i));
+            }
+        }else{
+            listHoras2.clear();
         }
+
         ArrayAdapter<String> adapter = new ArrayAdapter<>(CRUDReservasActivity.this, android.R.layout.simple_dropdown_item_1line, listHoras2);
         sp_horaSalida.setAdapter(adapter);
     }
@@ -281,11 +334,18 @@ public class CRUDReservasActivity extends AppCompatActivity {
                 }
                 ArrayAdapter<Mesas> adapter = new ArrayAdapter<>(CRUDReservasActivity.this, android.R.layout.simple_dropdown_item_1line, listMesas);
                 sp_mesas.setAdapter(adapter);
-                if(listMesas.size() > 0){
+                if(getIntent().getStringExtra("ACTIVITY").equals("ListaMesasActivity")){
+                    for(int i = 0; i < listMesas.size(); i++){
+                        if(listMesas.get(i).getIdMesa().equals(mesa.getIdMesa())){
+                            sp_mesas.setSelection(i);
+                            break;
+                        }
+                    }
+                }
+                if(listMesas.size() > 0 && !getIntent().getStringExtra("ACTIVITY").equals("ListaMesasActivity")){
                     sp_mesas.setEnabled(true);
                 }else{
                     sp_mesas.setEnabled(false);
-                    Toast.makeText(CRUDReservasActivity.this, "Este local no dispone de mesas para reservar", Toast.LENGTH_LONG).show();
                 }
                 //VERIFICAR SI HAY MESAS DISPONIBLES PARA ALQUILAR SINO OCULTAR BOTON DE RESERVA
                 if(listMesas.size() > 0){
@@ -324,10 +384,6 @@ public class CRUDReservasActivity extends AppCompatActivity {
                     m = String.valueOf(i1+1);
                 }
                 et_fecha.setText(d + "/" + m + "/" + i);
-
-
-                sp_horaEntrada.setEnabled(true);
-                sp_horaSalida.setEnabled(true);
 
 
                 ArrayList<Reservacion> listReservacionesDelDia = new ArrayList<>();

@@ -13,6 +13,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Pdm_alquilerMesasProyectoFinal">
         <activity
+            android:name=".CRUDHorariosAtencionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ListaHorariosAtencionActivity"
+            android:exported="false" />
+        <activity
             android:name=".ListaMesasActivity"
             android:exported="false" />
         <activity
