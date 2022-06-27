@@ -9,17 +9,19 @@ public class Mesas {
     private Local local;
     private int numeroMesa;
     private double precioReserva;
+    private String foto;
 
     public Mesas() {
     }
 
-    public Mesas(String idMesa, int capacidad, EstadoMesa estado, Local local, int numeroMesa, double precioReserva) {
+    public Mesas(String idMesa, int capacidad, EstadoMesa estado, Local local, int numeroMesa, double precioReserva, String foto) {
         this.idMesa = idMesa;
         this.capacidad = capacidad;
         this.estado = estado;
         this.local = local;
         this.numeroMesa = numeroMesa;
         this.precioReserva = precioReserva;
+        this.foto = foto;
     }
 
     public String getIdMesa() {
@@ -68,6 +70,14 @@ public class Mesas {
 
     public void setPrecioReserva(double precioReserva) {
         this.precioReserva = precioReserva;
+    }
+
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
     }
 
     @NonNull

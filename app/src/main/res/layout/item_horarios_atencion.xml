@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tvDiaItemHorarioAtencion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="dia"
+        android:textAlignment="center"
+        tools:layout_editor_absoluteX="168dp"
+        tools:layout_editor_absoluteY="26dp" />
+
+    <TextView
+        android:id="@+id/tvHoraAperturaItemHorarioAtencion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="horaApertura"
+        android:textAlignment="center"
+        tools:layout_editor_absoluteX="148dp"
+        tools:layout_editor_absoluteY="63dp" />
+
+    <TextView
+        android:id="@+id/tvHoraCierreItemHorarioAtencion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="horaCierre"
+        android:textAlignment="center"
+        tools:layout_editor_absoluteX="146dp"
+        tools:layout_editor_absoluteY="112dp" />
+
+</LinearLayout>
