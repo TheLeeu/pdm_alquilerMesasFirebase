@@ -1,4 +1,4 @@
-package com.example.pdm_alquilermesasproyectofinal.modelos;
+package com.example.pdm_alquilermesasproyectofinal.adaptadores;
 
 import android.content.Context;
 import android.media.Image;
@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.pdm_alquilermesasproyectofinal.R;
+import com.example.pdm_alquilermesasproyectofinal.modelos.Mesas;
 
 import java.util.ArrayList;
 
