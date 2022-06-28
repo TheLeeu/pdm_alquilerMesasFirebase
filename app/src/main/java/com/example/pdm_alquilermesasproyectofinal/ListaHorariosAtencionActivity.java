@@ -8,13 +8,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Spinner;
 
 import com.example.pdm_alquilermesasproyectofinal.adaptadores.AdaptadorHorarioAtencion;
-import com.example.pdm_alquilermesasproyectofinal.modelos.AdaptadorMesa;
 import com.example.pdm_alquilermesasproyectofinal.modelos.HorarioAtencion;
 import com.example.pdm_alquilermesasproyectofinal.modelos.Local;
-import com.example.pdm_alquilermesasproyectofinal.modelos.Mesas;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

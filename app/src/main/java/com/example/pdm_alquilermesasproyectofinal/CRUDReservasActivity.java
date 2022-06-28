@@ -3,6 +3,7 @@ package com.example.pdm_alquilermesasproyectofinal;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -30,6 +31,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.lang.reflect.Array;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -174,9 +177,27 @@ public class CRUDReservasActivity extends AppCompatActivity {
             sp_locales.setEnabled(false);
         }
 
+        //INTERACCION DEL EMPLEADO
+        if(getIntent().getStringExtra("ACTIVITY").equals("List_DipsMesas")){
+
+            idLocal = Integer.parseInt(getIntent().getStringExtra("idLocal"));
+            nombreLocal = getIntent().getStringExtra("nombreLocal");
+            direccionLocal = getIntent().getStringExtra("direccionLocal");
+            telefonoLocal = getIntent().getStringExtra("telefonoLocal");
+            coordenadasLocal = getIntent().getStringExtra("coordenadasLocal");
+            fotoLocal = getIntent().getStringExtra("fotoLocal");
+
+            local = new Local(idLocal, nombreLocal, direccionLocal, telefonoLocal, coordenadasLocal, fotoLocal);
+            EstadoMesa estado = new EstadoMesa(Integer.parseInt(getIntent().getStringExtra("idEstadoMesa")),getIntent().getStringExtra("estadoMesa"));
+            mesa = new Mesas(getIntent().getStringExtra("idMesa"), Integer.parseInt(getIntent().getStringExtra("capacidadMesa")),
+                    estado, local, Integer.parseInt(getIntent().getStringExtra("numeroMesa")), Double.parseDouble(getIntent().getStringExtra("precioMesa")),
+                    getIntent().getStringExtra("fotoMesa"));
+
+            sp_mesas.setEnabled(false);
+            sp_locales.setEnabled(false);
+        }
+
     }
-
-
 
     public ValueEventListener cargarLocales = new ValueEventListener() {
         @Override
@@ -190,6 +211,16 @@ public class CRUDReservasActivity extends AppCompatActivity {
                 sp_locales.setAdapter(adapter);
 
                 if(getIntent().getStringExtra("ACTIVITY").equals("ListaMesasActivity")){
+                    for(int i = 0; i < listLocales.size(); i++){
+                        if(String.valueOf(listLocales.get(i).getIdLocal()).equals(String.valueOf(local.getIdLocal()))){
+                            sp_locales.setSelection(i);
+                            break;
+                        }
+                    }
+                }
+
+                //INTERACCION DEL EMPLEADO
+                if(getIntent().getStringExtra("ACTIVITY").equals("List_DipsMesas")){
                     for(int i = 0; i < listLocales.size(); i++){
                         if(String.valueOf(listLocales.get(i).getIdLocal()).equals(String.valueOf(local.getIdLocal()))){
                             sp_locales.setSelection(i);
@@ -347,6 +378,22 @@ public class CRUDReservasActivity extends AppCompatActivity {
                 }else{
                     sp_mesas.setEnabled(false);
                 }
+
+                //INTERACCION DEL EMPLEADO
+                if(getIntent().getStringExtra("ACTIVITY").equals("List_DipsMesas")){
+                    for(int i = 0; i < listMesas.size(); i++){
+                        if(listMesas.get(i).getIdMesa().equals(mesa.getIdMesa())){
+                            sp_mesas.setSelection(i);
+                            break;
+                        }
+                    }
+                }
+                if(listMesas.size() > 0 && !getIntent().getStringExtra("ACTIVITY").equals("List_DipsMesas")){
+                    sp_mesas.setEnabled(true);
+                }else{
+                    sp_mesas.setEnabled(false);
+                }
+
                 //VERIFICAR SI HAY MESAS DISPONIBLES PARA ALQUILAR SINO OCULTAR BOTON DE RESERVA
                 if(listMesas.size() > 0){
                     btn_reservas.setEnabled(true);
@@ -391,6 +438,8 @@ public class CRUDReservasActivity extends AppCompatActivity {
                 for(int q = 0; q < listReservaciones.size(); q++){
                     if(listReservaciones.get(q).getFecha().equals(et_fecha.getText().toString())){
                         listReservacionesDelDia.add(listReservaciones.get(q));
+
+                        Log.d("Entra", "entra");
                     }
                 }
 

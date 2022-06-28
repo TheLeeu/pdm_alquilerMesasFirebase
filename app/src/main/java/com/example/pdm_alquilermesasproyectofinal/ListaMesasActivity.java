@@ -12,7 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.example.pdm_alquilermesasproyectofinal.modelos.AdaptadorMesa;
+import com.example.pdm_alquilermesasproyectofinal.adaptadores.AdaptadorMesa;
 import com.example.pdm_alquilermesasproyectofinal.modelos.Mesas;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
