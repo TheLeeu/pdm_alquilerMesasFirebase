@@ -42,6 +42,11 @@ public class EmpleadoMainActivity extends AppCompatActivity {
 
     }
 
+    public void Perfil(View view){
+        Intent intent = new Intent(this, Perfil.class);
+        startActivity(intent);
+    }
+
     public void btnCerrarSesion(View view) {
         mAuth.signOut();
         cargarLoginActivity();

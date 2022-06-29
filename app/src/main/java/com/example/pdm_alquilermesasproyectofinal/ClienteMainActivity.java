@@ -21,6 +21,11 @@ public class ClienteMainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
     }
 
+    public void Perfil(View view){
+        Intent intent = new Intent(this, Perfil.class);
+        startActivity(intent);
+    }
+
     public void btnCerrarSesion(View view) {
         mAuth.signOut();
         cargarLoginActivity();
