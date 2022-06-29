@@ -18,6 +18,7 @@ public class AdaptadorReservaciones extends BaseAdapter {
 
     public ArrayList<Reservacion> data;
     public Context context;
+    ImageView IMG;
     TextView Txtfecha, TxthoraEntrada, TxthoraSalida, Txtmesa, TxtUsuario;
 
     public AdaptadorReservaciones(ArrayList<Reservacion> lista, Context context){
@@ -48,6 +49,7 @@ public class AdaptadorReservaciones extends BaseAdapter {
         Reservacion reservacion = (Reservacion) getItem(i);
         view = LayoutInflater.from(context).inflate(R.layout.item_reservacion, null);
 
+        IMG = view.findViewById(R.id.imageView2);
         Txtfecha = view.findViewById(R.id.TxtViewfecha);
         TxtUsuario = view.findViewById(R.id.TxtViewUsuario);
         Txtmesa = view.findViewById(R.id.TxtViewmesa);

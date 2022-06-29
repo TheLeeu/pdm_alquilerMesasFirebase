@@ -30,6 +30,17 @@ public class ClienteMainActivity extends AppCompatActivity {
         cargarLocalesActivity();
     }
 
+    public void btnLocalesDis(View view){
+        Intent intent = new Intent(this, LocalesActivity.class);
+        intent.putExtra("ACTIVITY", "ClienteMainActivityDis");
+        startActivity(intent);
+    }
+
+    public void btnReserva(View view){
+        Intent intent = new Intent(this, List_Reservaciones.class);
+        intent.putExtra("ACTIVITY", "ClienteMainActivity");
+        startActivity(intent);
+    }
 
     public void cargarLoginActivity(){
         Intent intent = new Intent(this, LoginActivity.class);
@@ -39,6 +50,7 @@ public class ClienteMainActivity extends AppCompatActivity {
 
     public void cargarLocalesActivity(){
         Intent intent = new Intent(this, LocalesActivity.class);
+        intent.putExtra("ACTIVITY", "ClienteMainActivity");
         startActivity(intent);
     }
 }
