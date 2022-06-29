@@ -138,7 +138,15 @@ public class ListaLocalesActivity extends AppCompatActivity {
                                 startActivity(intent);
                                 break;
                             case 3:
-                                Toast.makeText(ListaLocalesActivity.this, "falta programar", Toast.LENGTH_SHORT).show();
+                                Intent it = new Intent(getApplicationContext(), ListaEmpleadosActivity.class);
+                                it.putExtra("ACTIVITY", "ListaLocalesActivity");
+                                it.putExtra("idLocal", String.valueOf(listLocal.get(posicionItem).getIdLocal()));
+                                it.putExtra("nombreLocal", listLocal.get(posicionItem).getNombre());
+                                it.putExtra("direccionLocal", listLocal.get(posicionItem).getDireccion());
+                                it.putExtra("telefonoLocal", listLocal.get(posicionItem).getTelefono());
+                                it.putExtra("coordenadasLocal", listLocal.get(posicionItem).getCoordenadasGps());
+                                it.putExtra("fotoLocal", listLocal.get(posicionItem).getFoto());
+                                startActivity(it);
                                 break;
                             case 4:
                                 Toast.makeText(ListaLocalesActivity.this, "falta programar", Toast.LENGTH_SHORT).show();
