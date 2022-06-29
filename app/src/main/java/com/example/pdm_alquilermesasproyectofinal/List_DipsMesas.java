@@ -32,6 +32,7 @@ public class List_DipsMesas extends AppCompatActivity {
     Empleado empleado = new Empleado();
     Mesas mesas = new Mesas();
     public ListView listaMesa;
+    String nombreLocal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,44 +48,57 @@ public class List_DipsMesas extends AppCompatActivity {
         arrayListMesa = new ArrayList<Mesas>();
         listaMesa = findViewById(R.id.ListMesa);
 
-        referenciData.child(MainActivity.TBL_EMPLEADOS).child(currentUser.getUid()).addValueEventListener(getEmpleado);
+        nombreLocal = getIntent().getStringExtra("nombreLocal");
 
-        referenciData.child(MainActivity.TBL_MESAS).addValueEventListener(cargarMesas);
+        if(getIntent().getStringExtra("ACTIVITY").equals("EmpleadoMainActivity")) {
+            referenciData.child(MainActivity.TBL_EMPLEADOS).child(currentUser.getUid()).addValueEventListener(getEmpleado);
+            referenciData.child(MainActivity.TBL_MESAS).addValueEventListener(cargarMesas);
+        }
 
-        listaMesa.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-                Log.d("Nom Local", arrayListMesa.get(i).getLocal().getNombre());
+        if(getIntent().getStringExtra("ACTIVITY").equals("LocalesActivityDis")) {
+            referenciData.child(MainActivity.TBL_MESAS).addValueEventListener(cargarMesasUsuarioDis);
+        }
 
 
-                Intent iten = new Intent(getApplicationContext(), CRUDReservasActivity.class);
-                iten.putExtra("ACTIVITY", "List_DipsMesas");
-                iten.putExtra("idMesa", arrayListMesa.get(i).getIdMesa());
-                iten.putExtra("capacidadMesa", String.valueOf(arrayListMesa.get(i).getCapacidad()));
-                iten.putExtra("idEstadoMesa", String.valueOf(arrayListMesa.get(i).getEstado().getIdEstadoMesa()));
-                iten.putExtra("estadoMesa", arrayListMesa.get(i).getEstado().getEstadoMesa());
-                iten.putExtra("numeroMesa", String.valueOf(arrayListMesa.get(i).getNumeroMesa()));
-                iten.putExtra("precioMesa", String.valueOf(arrayListMesa.get(i).getPrecioReserva()));
-                iten.putExtra("fotoMesa", arrayListMesa.get(i).getFoto());
+        if(getIntent().getStringExtra("ACTIVITY").equals("LocalesActivity")) {
+            referenciData.child(MainActivity.TBL_MESAS).addValueEventListener(cargarMesasUsuario);
+        }
 
-                iten.putExtra("idLocal", String.valueOf(arrayListMesa.get(i).getLocal().getIdLocal()));
-                iten.putExtra("nombreLocal", arrayListMesa.get(i).getLocal().getNombre());
-                iten.putExtra("direccionLocal", arrayListMesa.get(i).getLocal().getDireccion());
-                iten.putExtra("telefonoLocal", arrayListMesa.get(i).getLocal().getTelefono());
-                iten.putExtra("coordenadasLocal", arrayListMesa.get(i).getLocal().getCoordenadasGps());
-                iten.putExtra("fotoLocal", arrayListMesa.get(i).getLocal().getFoto());
-                startActivity(iten);
+        if(!getIntent().getStringExtra("ACTIVITY").equals("LocalesActivity")) {
+            listaMesa.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-            }
-        });
+                    Log.d("Nom Local", arrayListMesa.get(i).getLocal().getNombre());
+
+                    Intent iten = new Intent(getApplicationContext(), CRUDReservasActivity.class);
+                    iten.putExtra("ACTIVITY", "List_DipsMesas");
+                    iten.putExtra("idMesa", arrayListMesa.get(i).getIdMesa());
+                    iten.putExtra("capacidadMesa", String.valueOf(arrayListMesa.get(i).getCapacidad()));
+                    iten.putExtra("idEstadoMesa", String.valueOf(arrayListMesa.get(i).getEstado().getIdEstadoMesa()));
+                    iten.putExtra("estadoMesa", arrayListMesa.get(i).getEstado().getEstadoMesa());
+                    iten.putExtra("numeroMesa", String.valueOf(arrayListMesa.get(i).getNumeroMesa()));
+                    iten.putExtra("precioMesa", String.valueOf(arrayListMesa.get(i).getPrecioReserva()));
+                    iten.putExtra("fotoMesa", arrayListMesa.get(i).getFoto());
+
+                    iten.putExtra("idLocal", String.valueOf(arrayListMesa.get(i).getLocal().getIdLocal()));
+                    iten.putExtra("nombreLocal", arrayListMesa.get(i).getLocal().getNombre());
+                    iten.putExtra("direccionLocal", arrayListMesa.get(i).getLocal().getDireccion());
+                    iten.putExtra("telefonoLocal", arrayListMesa.get(i).getLocal().getTelefono());
+                    iten.putExtra("coordenadasLocal", arrayListMesa.get(i).getLocal().getCoordenadasGps());
+                    iten.putExtra("fotoLocal", arrayListMesa.get(i).getLocal().getFoto());
+                    startActivity(iten);
+
+                }
+            });
+        }
 
     }
 
     public ValueEventListener getEmpleado = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot snapshot) {
-            if(snapshot.exists()){
+            if (snapshot.exists()) {
                 empleado = snapshot.getValue(Empleado.class);
             }
         }
@@ -103,14 +117,71 @@ public class List_DipsMesas extends AppCompatActivity {
                 arrayListMesa.clear();
 
                 for (DataSnapshot items : snapshot.getChildren()) {
-                    mesas = items.getValue(Mesas.class);
+                    Mesas mesa = items.getValue(Mesas.class);
 
-                    if (mesas.getLocal().getNombre().equals(empleado.getLocal().getNombre())) {
+                    if (mesa.getLocal().getNombre().equals(empleado.getLocal().getNombre())){
 
-                        if (mesas.getEstado().getEstadoMesa().equals(MainActivity.ESTADO_MESA_DISPONIBLE.getEstadoMesa())) {
-
-                            arrayListMesa.add(mesas);
+                        if (mesa.getEstado().getEstadoMesa().equals(MainActivity.ESTADO_MESA_DISPONIBLE.getEstadoMesa())) {
+                            arrayListMesa.add(mesa);
                         }
+
+                    }
+
+                }
+                AdaptadorMesa adaptadorMesa = new AdaptadorMesa(arrayListMesa, getApplicationContext());
+                listaMesa.setAdapter(adaptadorMesa);
+            }
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError error) {
+
+        }
+    };
+
+    public ValueEventListener cargarMesasUsuarioDis = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot snapshot) {
+            if (snapshot.exists()) {
+
+                arrayListMesa.clear();
+
+                for (DataSnapshot items : snapshot.getChildren()) {
+                    Mesas mesa = items.getValue(Mesas.class);
+
+                    if (mesa.getLocal().getNombre().equals(nombreLocal)){
+
+                        if (mesa.getEstado().getEstadoMesa().equals(MainActivity.ESTADO_MESA_DISPONIBLE.getEstadoMesa())) {
+                            arrayListMesa.add(mesa);
+                        }
+
+                    }
+
+                }
+                AdaptadorMesa adaptadorMesa = new AdaptadorMesa(arrayListMesa, getApplicationContext());
+                listaMesa.setAdapter(adaptadorMesa);
+            }
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError error) {
+
+        }
+    };
+
+    public ValueEventListener cargarMesasUsuario = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot snapshot) {
+            if (snapshot.exists()) {
+
+                arrayListMesa.clear();
+
+                for (DataSnapshot items : snapshot.getChildren()) {
+                    Mesas mesa = items.getValue(Mesas.class);
+
+                    if (mesa.getLocal().getNombre().equals(nombreLocal)){
+
+                            arrayListMesa.add(mesa);
 
                     }
 
