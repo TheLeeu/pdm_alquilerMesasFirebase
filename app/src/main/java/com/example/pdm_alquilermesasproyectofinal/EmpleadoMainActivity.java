@@ -27,6 +27,7 @@ public class EmpleadoMainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(EmpleadoMainActivity.this, List_DipsMesas.class);
+                intent.putExtra("ACTIVITY", "EmpleadoMainActivity");
                 startActivity(intent);            }
         });
 
@@ -35,6 +36,7 @@ public class EmpleadoMainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(EmpleadoMainActivity.this, List_Reservaciones.class);
+                intent.putExtra("ACTIVITY", "EmpleadoMainActivity");
                 startActivity(intent);            }
         });
 
