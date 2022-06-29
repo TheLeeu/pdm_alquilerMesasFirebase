@@ -30,7 +30,7 @@ public class List_DipsMesas extends AppCompatActivity {
     public DatabaseReference referenciData;
     public ArrayList<Mesas> arrayListMesa;
     Empleado empleado = new Empleado();
-    Mesas mesas = new Mesas();
+
     public ListView listaMesa;
     String nombreLocal;
 
