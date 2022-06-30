@@ -19,7 +19,7 @@ public class AdaptadorReservaciones extends BaseAdapter {
     public ArrayList<Reservacion> data;
     public Context context;
     ImageView IMG;
-    TextView Txtfecha, TxthoraEntrada, TxthoraSalida, Txtmesa, TxtUsuario;
+    TextView Txtfecha, TxthoraEntrada, TxthoraSalida, Txtmesa, TxtUsuario, TxtLocal;
 
     public AdaptadorReservaciones(ArrayList<Reservacion> lista, Context context){
 
@@ -55,12 +55,14 @@ public class AdaptadorReservaciones extends BaseAdapter {
         Txtmesa = view.findViewById(R.id.TxtViewmesa);
         TxthoraEntrada = view.findViewById(R.id.TxtViewhoraEntrada);
         TxthoraSalida = view.findViewById(R.id.TxtViewhoraSalida);
+        TxtLocal = view.findViewById(R.id.textView11);
         ImageView img = view.findViewById(R.id.imageView);
 
-        String Cliente = reservacion.getPago().getNombre()+" "+reservacion.getPago().getUsuario().getApellido();
+        String Cliente = reservacion.getPago().getUsuario().getNombre()+" "+reservacion.getPago().getUsuario().getApellido();
 
         TxtUsuario.setText(Cliente);
         Txtmesa.setText("Numero de mesa "+reservacion.getMesa());
+        TxtLocal.setText("Local: "+reservacion.getMesa().getLocal().getNombre());
         Txtfecha.setText("Fecha "+reservacion.getFecha());
         TxthoraEntrada.setText("Entrada "+reservacion.getHoraEntrada());
         TxthoraSalida.setText("Salida "+reservacion.getHoraSalida());

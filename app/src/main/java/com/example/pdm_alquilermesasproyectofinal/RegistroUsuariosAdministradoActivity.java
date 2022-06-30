@@ -77,6 +77,20 @@ public class RegistroUsuariosAdministradoActivity extends AppCompatActivity {
         sp_locales.setVisibility(View.INVISIBLE);
         sp_locales.setEnabled(false);
 
+
+        if(getIntent().getStringExtra("ACTIVITY").equals("ListaEmpeladosActivity btn")){
+            localIntent = new Local(Integer.parseInt(getIntent().getStringExtra("idLocal")),
+                    getIntent().getStringExtra("nombreLocal"),
+                    getIntent().getStringExtra("direccionLocal"),
+                    getIntent().getStringExtra("telefonoLocal"),
+                    getIntent().getStringExtra("coordenadasLocal"),
+                    getIntent().getStringExtra("fotoLocal"));
+
+        }else if(getIntent().getStringExtra("ACTIVITY").equals("ListaEmpeladosActivity item")){
+
+        }
+
+
         mA = FirebaseAuth.getInstance();
         FirebaseUser current = mA.getCurrentUser();
 
@@ -139,17 +153,7 @@ public class RegistroUsuariosAdministradoActivity extends AppCompatActivity {
             }
         });
 
-        if(getIntent().getStringExtra("ACTIVITY").equals("ListaEmpeladosActivity btn")){
-            localIntent = new Local(Integer.parseInt(getIntent().getStringExtra("idLocal")),
-                    getIntent().getStringExtra("nombreLocal"),
-                    getIntent().getStringExtra("direccionLocal"),
-                    getIntent().getStringExtra("telefonoLocal"),
-                    getIntent().getStringExtra("coordenadasLocal"),
-                    getIntent().getStringExtra("fotoLocal"));
 
-        }else if(getIntent().getStringExtra("ACTIVITY").equals("ListaEmpeladosActivity item")){
-
-        }
     }
 
     public ValueEventListener cargarEstadoUsuario = new ValueEventListener() {
