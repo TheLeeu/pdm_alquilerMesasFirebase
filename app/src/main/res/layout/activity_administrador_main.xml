@@ -4,62 +4,78 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#C2DED1"
     tools:context=".AdministradorMainActivity">
 
     <TextView
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="100dp"
         android:text="ACTIVIDAD DE ADMINISTRADOR"
+        android:textColor="#000000"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.737"
+        app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/BtnPerfilModificar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="16dp"
+
+        android:layout_marginEnd="16dp"
+        android:backgroundTint="#C10404"
         android:onClick="btnCerrarSesion"
-        android:text="CERRAR SESION"
+        app:icon="@drawable/cerrar_sesion"
+        app:iconTint="#C2DED1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.562"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button6" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/button6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="REGISTRAR NUEVO USUARIO"
+        android:layout_width="246dp"
+        android:layout_height="84dp"
+        android:layout_marginTop="76dp"
+        android:backgroundTint="#FF9800"
         android:onClick="btnRegistrarUsuarios"
+        android:text="REGISTRAR NUEVO USUARIO"
+        app:icon="@drawable/registrar"
+        app:iconSize="40dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
     <Button
         android:id="@+id/button22"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_width="150dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="84dp"
+        android:backgroundTint="#FF9800"
         android:onClick="btnPruebas"
         android:text="RESERVAR"
+        app:icon="@drawable/mesa"
+        app:iconSize="30dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.889"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/BtnPerfilModificar" />
+        app:layout_constraintTop_toBottomOf="@+id/button6" />
 
     <Button
         android:id="@+id/button21"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="LOCALES"
+        android:layout_width="150dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="84dp"
+        android:backgroundTint="#FF9800"
         android:onClick="btnLocales"
+        android:text="LOCALES"
+        app:icon="@drawable/local"
+        app:iconSize="40dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.106"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button22" />
+        app:layout_constraintTop_toBottomOf="@+id/button6" />
 </androidx.constraintlayout.widget.ConstraintLayout>

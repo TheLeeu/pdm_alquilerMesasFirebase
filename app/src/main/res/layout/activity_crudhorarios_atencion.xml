@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#C2DED1"
     tools:context=".CRUDHorariosAtencionActivity">
 
 
@@ -66,9 +67,10 @@
         android:id="@+id/spHoraAperturaCRUDHorariosAtencion"
         android:layout_width="391dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="40dp"
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.55"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
@@ -76,31 +78,23 @@
         android:id="@+id/spHoraCierreCRUDHorariosAtencion"
         android:layout_width="391dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="44dp"
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spHoraAperturaCRUDHorariosAtencion" />
 
     <Button
-        android:id="@+id/btnAgregarCRUDHorariosAtencion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="Agregar"
-        android:onClick="btnAgregar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spHoraCierreCRUDHorariosAtencion" />
-
-    <Button
         android:id="@+id/btnModificarCRUDHorariosAtencion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="#FF9800"
         android:onClick="modificar"
         android:text="Modificar"
+        app:icon="@drawable/modificar"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.059"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spHoraCierreCRUDHorariosAtencion" />
 
@@ -108,10 +102,38 @@
         android:id="@+id/btnEliminarCRUDHorariosAtencion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="eliminar"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="#FF9800"
         android:onClick="btnEliminar"
+        android:text="eliminar"
+        app:icon="@drawable/eliminar"
+        app:iconSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.942"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnAgregarCRUDHorariosAtencion" />
+        app:layout_constraintTop_toBottomOf="@+id/spHoraCierreCRUDHorariosAtencion" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="12dp"
+        android:text="Hora de Entrada"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="16dp"
+        android:text="Hora de Salida"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spHoraAperturaCRUDHorariosAtencion" />
 </androidx.constraintlayout.widget.ConstraintLayout>

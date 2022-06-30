@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#C2DED1"
     tools:context=".SinInternetActivity">
 
     <TextView
@@ -11,19 +12,24 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:text="Para usar la App, activa los datos móviles o conéctate a una red WI-FI"
-        android:textSize="24sp"
+        android:textColor="#000000"
+        android:textColorHint="#000000"
+        android:textSize="34sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.446" />
 
     <Button
         android:id="@+id/button5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="REINTENTAR"
+        android:backgroundTint="#FF9800"
         android:onClick="btnReconectar"
+        android:text="REINTENTAR"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
