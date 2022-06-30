@@ -1,5 +1,7 @@
 package com.example.pdm_alquilermesasproyectofinal.modelos;
 
+import androidx.annotation.NonNull;
+
 public class Empleado {
     private Usuario usuario;
     private Local local;
@@ -26,5 +28,11 @@ public class Empleado {
 
     public void setLocal(Local local) {
         this.local = local;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return usuario.getNombre();
     }
 }

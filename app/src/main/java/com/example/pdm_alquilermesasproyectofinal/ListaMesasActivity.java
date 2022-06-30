@@ -113,7 +113,7 @@ public class ListaMesasActivity extends AppCompatActivity {
     public void abrirDialogo(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Seleccione una opcion")
-                .setItems(new String[]{"Modificar datos de mesa", "Rentar mesa"}, new DialogInterface.OnClickListener() {
+                .setItems(new String[]{"Modificar datos de mesa", "Rentar mesa", "Lista de reservaciones"}, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // The 'which' argument contains the index position
                         // of the selected item
@@ -157,6 +157,21 @@ public class ListaMesasActivity extends AppCompatActivity {
                                 i.putExtra("coordenadasLocal", coordenadasLocal);
                                 i.putExtra("fotoLocal", fotoLocal);
                                 startActivity(i);
+                                break;
+                            case 2:
+                                Intent ite = new Intent(getApplicationContext(), ListaReservasLocalAdministradorActivity.class);
+                                ite.putExtra("ACTIVITY", "ListaMesasActivity");
+                                ite.putExtra("idLocal", String.valueOf(idLocal));
+                                ite.putExtra("nombreLocal", nombreLocal);
+                                ite.putExtra("direccionLocal", direccionLocal);
+                                ite.putExtra("telefonoLocal", telefonoLocal);
+                                ite.putExtra("coordenadasLocal", coordenadasLocal);
+                                ite.putExtra("fotoLocal", fotoLocal);
+
+                                ite.putExtra("idMesa", listMesa.get(itemSeleccionado).getIdMesa());
+
+
+                                startActivity(ite);
                                 break;
                         }
                     }

@@ -52,6 +52,7 @@ public class RegistroUsuariosAdministradoActivity extends AppCompatActivity {
     private String userActual;
     private FirebaseAuth mA ;
     private Local local = new Local();
+    private Local localIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +85,7 @@ public class RegistroUsuariosAdministradoActivity extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabase.child(MainActivity.TBL_TIPO_USUARIOS).addValueEventListener(cargarTipoUsuario);
         mDatabase.child(MainActivity.TBL_ESTADO_USUARIOS).addValueEventListener(cargarEstadoUsuario);
-        mDatabase.child(MainActivity.TBL_LOCALES).addValueEventListener(cargarLocales);
+
         sp_tipoUsuario.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -93,6 +94,7 @@ public class RegistroUsuariosAdministradoActivity extends AppCompatActivity {
                 if(tipoU.getTipoUsuario().equals(MainActivity.USUARIO_TIPO_EMPLEADO.getTipoUsuario())){
                     sp_locales.setVisibility(View.VISIBLE);
                     sp_locales.setEnabled(true);
+                    mDatabase.child(MainActivity.TBL_LOCALES).addValueEventListener(cargarLocales);
 
                 }else{
                     sp_locales.setVisibility(View.INVISIBLE);
@@ -136,6 +138,18 @@ public class RegistroUsuariosAdministradoActivity extends AppCompatActivity {
 
             }
         });
+
+        if(getIntent().getStringExtra("ACTIVITY").equals("ListaEmpeladosActivity btn")){
+            localIntent = new Local(Integer.parseInt(getIntent().getStringExtra("idLocal")),
+                    getIntent().getStringExtra("nombreLocal"),
+                    getIntent().getStringExtra("direccionLocal"),
+                    getIntent().getStringExtra("telefonoLocal"),
+                    getIntent().getStringExtra("coordenadasLocal"),
+                    getIntent().getStringExtra("fotoLocal"));
+
+        }else if(getIntent().getStringExtra("ACTIVITY").equals("ListaEmpeladosActivity item")){
+
+        }
     }
 
     public ValueEventListener cargarEstadoUsuario = new ValueEventListener() {
@@ -167,6 +181,17 @@ public class RegistroUsuariosAdministradoActivity extends AppCompatActivity {
                 }
                 ArrayAdapter<TipoUsuario> adaptador = new ArrayAdapter<>(RegistroUsuariosAdministradoActivity.this, android.R.layout.simple_dropdown_item_1line, listTipoUsuario);
                 sp_tipoUsuario.setAdapter(adaptador);
+
+                if(getIntent().getStringExtra("ACTIVITY").equals("ListaEmpeladosActivity btn") ||
+                getIntent().getStringExtra("ACTIVITY").equals("ListaEmpeladosActivity item")){
+                    for(int i = 0; i < listTipoUsuario.size(); i++){
+                        if(listTipoUsuario.get(i).getTipoUsuario().equals(MainActivity.USUARIO_TIPO_EMPLEADO.getTipoUsuario())){
+                            sp_tipoUsuario.setSelection(i);
+                            sp_tipoUsuario.setEnabled(false);
+                            break;
+                        }
+                    }
+                }
             }
         }
 
@@ -186,6 +211,16 @@ public class RegistroUsuariosAdministradoActivity extends AppCompatActivity {
                 }
                 ArrayAdapter<Local> adapter = new ArrayAdapter<>(RegistroUsuariosAdministradoActivity.this, android.R.layout.simple_dropdown_item_1line, listLocal);
                 sp_locales.setAdapter(adapter);
+                if(getIntent().getStringExtra("ACTIVITY").equals("ListaEmpeladosActivity btn") ||
+                        getIntent().getStringExtra("ACTIVITY").equals("ListaEmpeladosActivity item")){
+                    for(int i = 0; i < listLocal.size(); i++){
+                        if(listLocal.get(i).getIdLocal() == localIntent.getIdLocal()){
+                            sp_locales.setSelection(i);
+                            sp_locales.setEnabled(false);
+                            break;
+                        }
+                    }
+                }
             }
         }
 

@@ -36,6 +36,7 @@ public class AdministradorMainActivity extends AppCompatActivity {
     public void cargarRegistroUsuariosAdministradorActivity(){
         FirebaseUser user = mAuth.getCurrentUser();
         Intent intent = new Intent(this, RegistroUsuariosAdministradoActivity.class);
+        intent.putExtra("ACTIVITY", "AdministradorMainActivity");
         startActivityForResult(intent,1);
     }
 
