@@ -250,43 +250,44 @@ public class RegistroUsuariosAdministradoActivity extends AppCompatActivity {
                             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if(task.isSuccessful()) {
+                                        FirebaseUser user = myAuth.getCurrentUser();
 
-                                    FirebaseUser user = myAuth.getCurrentUser();
+                                        FirebaseDatabase database = FirebaseDatabase.getInstance();
+                                        DatabaseReference myRef = database.getReference(MainActivity.TBL_USUARIOS);
+                                        Usuario usuario = new Usuario();
+                                        usuario.setIdUsuario(user.getUid());
+                                        usuario.setNombre(et_nombre.getText().toString());
+                                        usuario.setApellido(et_apellido.getText().toString());
+                                        usuario.setEdad(Integer.parseInt(et_edad.getText().toString()));
+                                        usuario.setFoto(MainActivity.FOTO_USUARIOS_NUEVOS_DEFAULT);
+                                        usuario.setCorreo(et_correo.getText().toString());
+                                        usuario.setTelefono(et_telefono.getText().toString());
 
-                                    FirebaseDatabase database = FirebaseDatabase.getInstance();
-                                    DatabaseReference myRef = database.getReference(MainActivity.TBL_USUARIOS);
-                                    Usuario usuario = new Usuario();
-                                    usuario.setIdUsuario(user.getUid());
-                                    usuario.setNombre(et_nombre.getText().toString());
-                                    usuario.setApellido(et_apellido.getText().toString());
-                                    usuario.setEdad(Integer.parseInt(et_edad.getText().toString()));
-                                    usuario.setFoto(MainActivity.FOTO_USUARIOS_NUEVOS_DEFAULT);
-                                    usuario.setCorreo(et_correo.getText().toString());
-                                    usuario.setTelefono(et_telefono.getText().toString());
+                                        //PARA TIPO DE USUARIO
+                                        usuario.setTipo(tipoU);
 
-                                    //PARA TIPO DE USUARIO
-                                    usuario.setTipo(tipoU);
+                                        //PARA ESTADO USUARIO
+                                        usuario.setEstado(estadoU);
 
-                                    //PARA ESTADO USUARIO
-                                    usuario.setEstado(estadoU);
-
-                                    myRef.child(user.getUid()).setValue(usuario);
+                                        myRef.child(user.getUid()).setValue(usuario);
 
 
-                                    //SI EL SPINNER DE LOCALES ESTA VISIBLE SIGNIFICA QUE REGISTRAREMOS UN EMPLEADO
-                                    //ENTONCES REGISTRAREMOS EL LOCAL ASIGNADO EN LA TABLA LOCALES
-                                    if(sp_locales.getVisibility() == View.VISIBLE){
-                                        FirebaseDatabase databaseE = FirebaseDatabase.getInstance();
-                                        DatabaseReference myRefE = database.getReference(MainActivity.TBL_EMPLEADOS);
-                                        Empleado empleado = new Empleado();
-                                        empleado.setUsuario(usuario);
-                                        empleado.setLocal(local);
-                                        myRefE.child(user.getUid()).setValue(empleado);
+                                        //SI EL SPINNER DE LOCALES ESTA VISIBLE SIGNIFICA QUE REGISTRAREMOS UN EMPLEADO
+                                        //ENTONCES REGISTRAREMOS EL LOCAL ASIGNADO EN LA TABLA LOCALES
+                                        if (sp_locales.getVisibility() == View.VISIBLE) {
+                                            FirebaseDatabase databaseE = FirebaseDatabase.getInstance();
+                                            DatabaseReference myRefE = database.getReference(MainActivity.TBL_EMPLEADOS);
+                                            Empleado empleado = new Empleado();
+                                            empleado.setUsuario(usuario);
+                                            empleado.setLocal(local);
+                                            myRefE.child(user.getUid()).setValue(empleado);
+                                        }
+
+                                        //SE CIERRA SESION PORQUE AL CREAR EL USUARIO QUEDA LA SESION INICIA
+                                        myAuth.signOut();
+                                        registroCompleto(user, et_contrasenia.getText().toString());
                                     }
-
-                                    //SE CIERRA SESION PORQUE AL CREAR EL USUARIO QUEDA LA SESION INICIA
-                                    myAuth.signOut();
-                                    registroCompleto(user, et_contrasenia.getText().toString());
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                         @Override
