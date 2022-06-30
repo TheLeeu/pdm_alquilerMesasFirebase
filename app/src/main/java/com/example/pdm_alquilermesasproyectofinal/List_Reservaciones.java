@@ -34,8 +34,9 @@ public class List_Reservaciones extends AppCompatActivity {
     public ArrayList<Reservacion> arrayListReserva;
     Empleado empleado = new Empleado();
     public ListView listaReserva;
-    private int hora;
-    private int minuto;
+    private int hora, minuto, diaAc, MesAc;
+    private String h, m, dia, mes, HoraSalida, HoSa, MiSa, DiaRe, MesRe, FechaAc, FechaHoy;
+    private String[] parts;
 
 
     @Override
@@ -78,39 +79,52 @@ public class List_Reservaciones extends AppCompatActivity {
         }
     };
 
+    public void Fecha(){
+
+        long ahora = System.currentTimeMillis();
+        Calendar calendario = Calendar.getInstance();
+        calendario.setTimeInMillis(ahora);
+        hora = calendario.get(Calendar.HOUR_OF_DAY);
+        minuto = calendario.get(Calendar.MINUTE);
+        diaAc = calendario.get(Calendar.DAY_OF_MONTH);
+        MesAc = calendario.get(Calendar.MONTH);
+
+        if (hora < 10) {
+            h = "0" + hora;
+        } else {
+            h = String.valueOf(hora);
+        }
+        if ((minuto + 1) < 10) {
+            m = "0" + (minuto + 1);
+        } else {
+            m = String.valueOf(minuto + 1);
+        }
+
+        if (diaAc < 10) {
+            dia = "0" + diaAc;
+        } else {
+            dia = String.valueOf(diaAc);
+        }
+        if ((MesAc + 1) < 10) {
+            mes = "0" + (MesAc + 1);
+        } else {
+            mes = String.valueOf(MesAc + 1);
+        }
+
+        Date fecha = new Date(ahora);
+
+        @SuppressLint("SimpleDateFormat") DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        FechaAc = df.format(fecha);
+
+    }
+
     public final ValueEventListener cargarReservaciones = new ValueEventListener() {
 
         @Override
         public void onDataChange(@NonNull DataSnapshot snapshot) {
             if (snapshot.exists()) {
 
-                long ahora = System.currentTimeMillis();
-                Calendar calendario = Calendar.getInstance();
-                calendario.setTimeInMillis(ahora);
-                hora = calendario.get(Calendar.HOUR_OF_DAY);
-                minuto = calendario.get(Calendar.MINUTE);
-
-                String h = "";
-                String m = "";
-                if (hora < 10) {
-                    h = "0" + hora;
-                } else {
-                    h = String.valueOf(hora);
-                }
-                if ((minuto + 1) < 10) {
-                    m = "0" + (minuto + 1);
-                } else {
-                    m = String.valueOf(minuto + 1);
-                }
-
-                String HoraActual = h + ":" + m;
-                String HoraSalida;
-
-                Date fecha = new Date(ahora);
-
-                @SuppressLint("SimpleDateFormat") DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-                String FechaHoy = df.format(fecha);
-
+                Fecha();
                 arrayListReserva.clear();
 
                 for (DataSnapshot items : snapshot.getChildren()) {
@@ -119,51 +133,66 @@ public class List_Reservaciones extends AppCompatActivity {
 
                     if (reservacion.getMesa().getLocal().getNombre().equals(empleado.getLocal().getNombre())) {
 
-                        if (reservacion.getFecha().equals(FechaHoy)) {
+                        FechaHoy = reservacion.getFecha();
+                        parts = FechaHoy.split("/");
+                        DiaRe = parts[0];
+                        MesRe = parts[1];
 
-                            HoraSalida = reservacion.getHoraSalida();
-                            String[] parts = HoraSalida.split(":");
-                            String HoSa = parts[0];
-                            String MiSa = parts[1];
+                        if (Integer.parseInt(MesRe) > Integer.parseInt(mes)) {
 
-                            parts = HoraActual.split(":");
-                            String HoAc = parts[0];
-                            String MiAc = parts[1];
+                            if (reservacion.getFecha().equals(FechaAc)) {
 
-                            Log.d("Hora Salida", String.valueOf(Integer.parseInt(HoSa)));
-                            Log.d("Hora Mi Salida", String.valueOf(Integer.parseInt(MiSa)));
+                                HoraSalida = reservacion.getHoraSalida();
+                                parts = HoraSalida.split(":");
+                                HoSa = parts[0];
+                                MiSa = parts[1];
 
-                            Log.d("Hora Actual", String.valueOf(Integer.parseInt(HoAc)));
-                            Log.d("Hora Mi Actual", String.valueOf(Integer.parseInt(MiAc)));
-
-
-                            if (Integer.parseInt(HoSa) > Integer.parseInt(HoAc)) {
-
-                                Log.d("Pasa Ho", "");
-
-                                arrayListReserva.add(reservacion);
-
-                            }
-                            else if (Integer.parseInt(HoSa) == Integer.parseInt(HoAc)){
-
-                                if (Integer.parseInt(MiSa) >= Integer.parseInt(MiAc)) {
-
-                                    Log.d("Pasa Min", "");
-
+                                if (Integer.parseInt(HoSa) > Integer.parseInt(h)) {
                                     arrayListReserva.add(reservacion);
                                 }
+                                else if (Integer.parseInt(HoSa) == Integer.parseInt(h)){
 
+                                    if (Integer.parseInt(MiSa) >= Integer.parseInt(m)) {
+                                        arrayListReserva.add(reservacion);
+                                    }else{
+                                        referenciData.child(MainActivity.TBL_RESERVACIONES).child(String.valueOf(reservacion.getIdReservacion())).removeValue();
+                                    }
+                                }else{
+                                    referenciData.child(MainActivity.TBL_RESERVACIONES).child(String.valueOf(reservacion.getIdReservacion())).removeValue();
+                                }
                             }
-                            else{
-
-                                referenciData.child(MainActivity.TBL_RESERVACIONES).child(String.valueOf(reservacion.getIdReservacion())).removeValue();
-
-                            }
-
                         }
+                        else if (Integer.parseInt(MesRe) == Integer.parseInt(mes)) {
 
+                            if (Integer.parseInt(DiaRe) >= Integer.parseInt(dia)) {
+
+                                if (reservacion.getFecha().equals(FechaAc)) {
+                                    HoraSalida = reservacion.getHoraSalida();
+                                    parts = HoraSalida.split(":");
+                                    HoSa = parts[0];
+                                    MiSa = parts[1];
+
+                                    if (Integer.parseInt(HoSa) > Integer.parseInt(h)) {
+                                        arrayListReserva.add(reservacion);
+                                    }
+                                    else if (Integer.parseInt(HoSa) == Integer.parseInt(h)){
+
+                                        if (Integer.parseInt(MiSa) >= Integer.parseInt(m)) {
+                                            arrayListReserva.add(reservacion);
+                                        }else{
+                                            referenciData.child(MainActivity.TBL_RESERVACIONES).child(String.valueOf(reservacion.getIdReservacion())).removeValue();
+                                        }
+                                    }else{
+                                        referenciData.child(MainActivity.TBL_RESERVACIONES).child(String.valueOf(reservacion.getIdReservacion())).removeValue();
+                                    }
+                                }
+                            }else{
+                                referenciData.child(MainActivity.TBL_RESERVACIONES).child(String.valueOf(reservacion.getIdReservacion())).removeValue();
+                            }
+                        }else{
+                            referenciData.child(MainActivity.TBL_RESERVACIONES).child(String.valueOf(reservacion.getIdReservacion())).removeValue();
+                        }
                     }
-
                 }
                 AdaptadorReservaciones adaptadorReservaciones = new AdaptadorReservaciones(arrayListReserva, getApplicationContext());
                 listaReserva.setAdapter(adaptadorReservaciones);
@@ -182,6 +211,7 @@ public class List_Reservaciones extends AppCompatActivity {
         public void onDataChange(@NonNull DataSnapshot snapshot) {
             if (snapshot.exists()) {
 
+                Fecha();
                 arrayListReserva.clear();
 
                 for (DataSnapshot items : snapshot.getChildren()) {
@@ -190,10 +220,67 @@ public class List_Reservaciones extends AppCompatActivity {
 
                     if (reservacion.getPago().getUsuario().getIdUsuario().equals(currentUser.getUid())) {
 
-                        arrayListReserva.add(reservacion);
+                        FechaHoy = reservacion.getFecha();
+                        parts = FechaHoy.split("/");
+                        DiaRe = parts[0];
+                        MesRe = parts[1];
 
+                        if (Integer.parseInt(MesRe) > Integer.parseInt(mes)) {
+
+                            if (reservacion.getFecha().equals(FechaAc)) {
+
+                                HoraSalida = reservacion.getHoraSalida();
+                                parts = HoraSalida.split(":");
+                                HoSa = parts[0];
+                                MiSa = parts[1];
+
+                                if (Integer.parseInt(HoSa) > Integer.parseInt(h)) {
+                                    arrayListReserva.add(reservacion);
+                                }
+                                else if (Integer.parseInt(HoSa) == Integer.parseInt(h)){
+
+                                    if (Integer.parseInt(MiSa) >= Integer.parseInt(m)) {
+                                        arrayListReserva.add(reservacion);
+                                    }else{
+                                        referenciData.child(MainActivity.TBL_RESERVACIONES).child(String.valueOf(reservacion.getIdReservacion())).removeValue();
+                                    }
+                                }else{
+                                    referenciData.child(MainActivity.TBL_RESERVACIONES).child(String.valueOf(reservacion.getIdReservacion())).removeValue();
+                                }
+                            }
+                        }
+                        else if (Integer.parseInt(MesRe) == Integer.parseInt(mes)) {
+
+                            if (Integer.parseInt(DiaRe) >= Integer.parseInt(dia)) {
+
+                                if (reservacion.getFecha().equals(FechaAc)) {
+
+                                    HoraSalida = reservacion.getHoraSalida();
+                                    parts = HoraSalida.split(":");
+                                    HoSa = parts[0];
+                                    MiSa = parts[1];
+
+                                    if (Integer.parseInt(HoSa) > Integer.parseInt(h)) {
+                                        arrayListReserva.add(reservacion);
+                                    }
+                                    else if (Integer.parseInt(HoSa) == Integer.parseInt(h)){
+
+                                        if (Integer.parseInt(MiSa) >= Integer.parseInt(m)) {
+                                            arrayListReserva.add(reservacion);
+                                        }else{
+                                            referenciData.child(MainActivity.TBL_RESERVACIONES).child(String.valueOf(reservacion.getIdReservacion())).removeValue();
+                                        }
+                                    }else{
+                                        referenciData.child(MainActivity.TBL_RESERVACIONES).child(String.valueOf(reservacion.getIdReservacion())).removeValue();
+                                    }
+                                }
+                            }else{
+                                referenciData.child(MainActivity.TBL_RESERVACIONES).child(String.valueOf(reservacion.getIdReservacion())).removeValue();
+                            }
+                        }else{
+                            referenciData.child(MainActivity.TBL_RESERVACIONES).child(String.valueOf(reservacion.getIdReservacion())).removeValue();
+                        }
                     }
-
                 }
                 AdaptadorReservaciones adaptadorReservaciones = new AdaptadorReservaciones(arrayListReserva, getApplicationContext());
                 listaReserva.setAdapter(adaptadorReservaciones);
