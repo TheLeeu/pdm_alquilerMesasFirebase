@@ -21,6 +21,11 @@ public class ClienteMainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
     }
 
+    public void Perfil(View view){
+        Intent intent = new Intent(this, Perfil.class);
+        startActivity(intent);
+    }
+
     public void btnCerrarSesion(View view) {
         mAuth.signOut();
         cargarLoginActivity();
@@ -30,6 +35,17 @@ public class ClienteMainActivity extends AppCompatActivity {
         cargarLocalesActivity();
     }
 
+    public void btnLocalesDis(View view){
+        Intent intent = new Intent(this, LocalesActivity.class);
+        intent.putExtra("ACTIVITY", "ClienteMainActivityDis");
+        startActivity(intent);
+    }
+
+    public void btnReserva(View view){
+        Intent intent = new Intent(this, List_Reservaciones.class);
+        intent.putExtra("ACTIVITY", "ClienteMainActivity");
+        startActivity(intent);
+    }
 
     public void cargarLoginActivity(){
         Intent intent = new Intent(this, LoginActivity.class);
@@ -39,6 +55,7 @@ public class ClienteMainActivity extends AppCompatActivity {
 
     public void cargarLocalesActivity(){
         Intent intent = new Intent(this, LocalesActivity.class);
+        intent.putExtra("ACTIVITY", "ClienteMainActivity");
         startActivity(intent);
     }
 }

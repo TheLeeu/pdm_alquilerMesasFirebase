@@ -30,6 +30,7 @@ public class List_Reservaciones extends AppCompatActivity {
     public FirebaseDatabase database;
     private FirebaseAuth mAuth;
     public DatabaseReference referenciData;
+    public FirebaseUser currentUser;
     public ArrayList<Reservacion> arrayListReserva;
     Empleado empleado = new Empleado();
     public ListView listaReserva;
@@ -46,14 +47,20 @@ public class List_Reservaciones extends AppCompatActivity {
         referenciData = database.getReference();
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
+        currentUser = mAuth.getCurrentUser();
 
         arrayListReserva = new ArrayList<Reservacion>();
         listaReserva = findViewById(R.id.ListReserva);
 
-        referenciData.child(MainActivity.TBL_EMPLEADOS).child(currentUser.getUid()).addValueEventListener(getEmpleado);
+        if(getIntent().getStringExtra("ACTIVITY").equals("EmpleadoMainActivity")) {
+            referenciData.child(MainActivity.TBL_EMPLEADOS).child(currentUser.getUid()).addValueEventListener(getEmpleado);
 
-        referenciData.child(MainActivity.TBL_RESERVACIONES).addValueEventListener(cargarReservaciones);
+            referenciData.child(MainActivity.TBL_RESERVACIONES).addValueEventListener(cargarReservaciones);
+        }
+
+        if(getIntent().getStringExtra("ACTIVITY").equals("ClienteMainActivity")) {
+            referenciData.child(MainActivity.TBL_RESERVACIONES).addValueEventListener(cargarReservacionesUsuario);
+        }
 
     }
 
@@ -72,6 +79,7 @@ public class List_Reservaciones extends AppCompatActivity {
     };
 
     public final ValueEventListener cargarReservaciones = new ValueEventListener() {
+
         @Override
         public void onDataChange(@NonNull DataSnapshot snapshot) {
             if (snapshot.exists()) {
@@ -153,6 +161,36 @@ public class List_Reservaciones extends AppCompatActivity {
                             }
 
                         }
+
+                    }
+
+                }
+                AdaptadorReservaciones adaptadorReservaciones = new AdaptadorReservaciones(arrayListReserva, getApplicationContext());
+                listaReserva.setAdapter(adaptadorReservaciones);
+            }
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError error) {
+
+        }
+    };
+
+    public final ValueEventListener cargarReservacionesUsuario = new ValueEventListener() {
+
+        @Override
+        public void onDataChange(@NonNull DataSnapshot snapshot) {
+            if (snapshot.exists()) {
+
+                arrayListReserva.clear();
+
+                for (DataSnapshot items : snapshot.getChildren()) {
+
+                    Reservacion reservacion = items.getValue(Reservacion.class);
+
+                    if (reservacion.getPago().getUsuario().getIdUsuario().equals(currentUser.getUid())) {
+
+                        arrayListReserva.add(reservacion);
 
                     }
 
