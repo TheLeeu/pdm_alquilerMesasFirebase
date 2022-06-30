@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#C2DED1"
     tools:context=".CRUDMesasActivity">
 
     <ImageView
@@ -21,9 +22,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:drawableLeft="@drawable/numero"
         android:ems="10"
-        android:inputType="number"
         android:hint="Número de mesa"
+        android:inputType="number"
+        android:textColor="#000000"
+        android:textColorHint="#000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imgCRUDMesas" />
@@ -33,9 +37,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:drawableLeft="@drawable/capacidad"
         android:ems="10"
-        android:inputType="number"
         android:hint="Capicidad de mesa"
+        android:inputType="number"
+        android:textColor="#000000"
+        android:textColorHint="#000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etNumeroCRUDMesas" />
@@ -45,9 +52,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:drawableLeft="@drawable/precio"
         android:ems="10"
-        android:inputType="numberDecimal"
         android:hint="Precio para reservar"
+        android:inputType="numberDecimal"
+        android:textColor="#000000"
+        android:textColorHint="#000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etCapacidadCRUDMesas" />
@@ -69,8 +79,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="Agregar"
         android:onClick="btnAgregar"
+        android:text="Agregar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spEstadoCRUDMesas" />
@@ -80,8 +90,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="Modificar"
+        android:backgroundTint="#FF9800"
         android:onClick="btnModificar"
+        android:text="Modificar"
+        app:icon="@drawable/modificar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spEstadoCRUDMesas" />
@@ -91,8 +103,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="eliminar"
+        android:backgroundTint="#FF9800"
         android:onClick="btnEliminar"
+        android:text="eliminar"
+        app:icon="@drawable/eliminar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnAgregarCRUDMesas" />

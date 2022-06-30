@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#C2DED1"
     tools:context=".CRUDLocalActivity">
 
     <ImageView
@@ -21,9 +22,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:drawableLeft="@drawable/palabra"
         android:ems="10"
         android:hint="nombre"
         android:inputType="textPersonName"
+        android:textColor="#000000"
+        android:textColorHint="#000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imgCRUDLocalActivity" />
@@ -33,9 +37,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:drawableLeft="@drawable/palabra"
         android:ems="10"
         android:hint="dirección"
         android:inputType="textPersonName"
+        android:textColor="#000000"
+        android:textColorHint="#020202"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etNombreCRUDLocalActivity" />
@@ -45,9 +52,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:drawableLeft="@drawable/fijo"
         android:ems="10"
         android:hint="telefono"
         android:inputType="phone"
+        android:textColor="#000000"
+        android:textColorHint="#000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etDireccionCRUDLocalActivity" />
@@ -57,9 +67,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:drawableLeft="@drawable/coordenadas"
         android:ems="10"
         android:hint="coordenadas GPS"
         android:inputType="textPersonName"
+        android:textColor="#000000"
+        android:textColorHint="#000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etTelefonoCRUDLocalActivity" />
@@ -69,8 +82,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="registrar"
         android:onClick="btnAgregar"
+        android:text="registrar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etCoordenadasCRUDLocalActivity" />
@@ -80,8 +93,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="modificar"
+        android:backgroundTint="#FF9800"
         android:onClick="btnModificar"
+        android:text="modificar"
+        app:icon="@drawable/modificar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etCoordenadasCRUDLocalActivity" />
@@ -91,8 +106,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="eliminar"
+        android:backgroundTint="#FF9800"
         android:onClick="btnEliminar"
+        android:text="eliminar"
+        app:icon="@drawable/eliminar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnRegistrarCRUDLocalActivity" />
