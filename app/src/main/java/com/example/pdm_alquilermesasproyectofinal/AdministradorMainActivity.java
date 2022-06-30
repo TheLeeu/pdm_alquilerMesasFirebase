@@ -74,4 +74,9 @@ public class AdministradorMainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, ListaLocalesActivity.class);
         startActivity(intent);
     }
+
+    public void abrirPerfil(View view) {
+        Intent i = new Intent(this, Perfil.class);
+        startActivity(i);
+    }
 }
