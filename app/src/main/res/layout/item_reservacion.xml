@@ -33,6 +33,7 @@
                 android:text="TextView"
                 android:textSize="24sp" />
 
+
             <TextView
                 android:id="@+id/TxtViewfecha"
                 android:layout_width="match_parent"
@@ -41,6 +42,11 @@
 
             <TextView
                 android:id="@+id/TxtViewmesa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
+            <TextView
+                android:id="@+id/textView11"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="TextView" />
@@ -56,6 +62,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="TextView" />
+
+
         </LinearLayout>
     </LinearLayout>
 

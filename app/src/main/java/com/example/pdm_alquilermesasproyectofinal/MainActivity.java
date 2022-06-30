@@ -67,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
 
-
     }
 
     public void validarUsuario(FirebaseUser user){

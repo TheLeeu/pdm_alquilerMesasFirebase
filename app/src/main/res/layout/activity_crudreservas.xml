@@ -7,6 +7,7 @@
     android:background="#C2DED1"
     tools:context=".CRUDReservasActivity">
 
+
     <TextView
         android:id="@+id/textView16"
         android:layout_width="wrap_content"
@@ -109,6 +110,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="45dp" />
+
 
     <Spinner
         android:id="@+id/spHoraEntradaCRUDReservasActivity"

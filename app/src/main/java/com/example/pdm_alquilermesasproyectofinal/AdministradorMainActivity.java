@@ -36,6 +36,7 @@ public class AdministradorMainActivity extends AppCompatActivity {
     public void cargarRegistroUsuariosAdministradorActivity(){
         FirebaseUser user = mAuth.getCurrentUser();
         Intent intent = new Intent(this, RegistroUsuariosAdministradoActivity.class);
+        intent.putExtra("ACTIVITY", "AdministradorMainActivity");
         startActivityForResult(intent,1);
     }
 
@@ -72,5 +73,10 @@ public class AdministradorMainActivity extends AppCompatActivity {
     public void cargarListaLocalesActivity(){
         Intent intent = new Intent(this, ListaLocalesActivity.class);
         startActivity(intent);
+    }
+
+    public void abrirPerfil(View view) {
+        Intent i = new Intent(this, Perfil.class);
+        startActivity(i);
     }
 }

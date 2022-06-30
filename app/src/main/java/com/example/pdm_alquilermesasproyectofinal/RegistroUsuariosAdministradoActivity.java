@@ -52,6 +52,7 @@ public class RegistroUsuariosAdministradoActivity extends AppCompatActivity {
     private String userActual;
     private FirebaseAuth mA ;
     private Local local = new Local();
+    private Local localIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +77,20 @@ public class RegistroUsuariosAdministradoActivity extends AppCompatActivity {
         sp_locales.setVisibility(View.INVISIBLE);
         sp_locales.setEnabled(false);
 
+
+        if(getIntent().getStringExtra("ACTIVITY").equals("ListaEmpeladosActivity btn")){
+            localIntent = new Local(Integer.parseInt(getIntent().getStringExtra("idLocal")),
+                    getIntent().getStringExtra("nombreLocal"),
+                    getIntent().getStringExtra("direccionLocal"),
+                    getIntent().getStringExtra("telefonoLocal"),
+                    getIntent().getStringExtra("coordenadasLocal"),
+                    getIntent().getStringExtra("fotoLocal"));
+
+        }else if(getIntent().getStringExtra("ACTIVITY").equals("ListaEmpeladosActivity item")){
+
+        }
+
+
         mA = FirebaseAuth.getInstance();
         FirebaseUser current = mA.getCurrentUser();
 
@@ -84,7 +99,7 @@ public class RegistroUsuariosAdministradoActivity extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabase.child(MainActivity.TBL_TIPO_USUARIOS).addValueEventListener(cargarTipoUsuario);
         mDatabase.child(MainActivity.TBL_ESTADO_USUARIOS).addValueEventListener(cargarEstadoUsuario);
-        mDatabase.child(MainActivity.TBL_LOCALES).addValueEventListener(cargarLocales);
+
         sp_tipoUsuario.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -93,6 +108,7 @@ public class RegistroUsuariosAdministradoActivity extends AppCompatActivity {
                 if(tipoU.getTipoUsuario().equals(MainActivity.USUARIO_TIPO_EMPLEADO.getTipoUsuario())){
                     sp_locales.setVisibility(View.VISIBLE);
                     sp_locales.setEnabled(true);
+                    mDatabase.child(MainActivity.TBL_LOCALES).addValueEventListener(cargarLocales);
 
                 }else{
                     sp_locales.setVisibility(View.INVISIBLE);
@@ -136,6 +152,8 @@ public class RegistroUsuariosAdministradoActivity extends AppCompatActivity {
 
             }
         });
+
+
     }
 
     public ValueEventListener cargarEstadoUsuario = new ValueEventListener() {
@@ -167,6 +185,17 @@ public class RegistroUsuariosAdministradoActivity extends AppCompatActivity {
                 }
                 ArrayAdapter<TipoUsuario> adaptador = new ArrayAdapter<>(RegistroUsuariosAdministradoActivity.this, android.R.layout.simple_dropdown_item_1line, listTipoUsuario);
                 sp_tipoUsuario.setAdapter(adaptador);
+
+                if(getIntent().getStringExtra("ACTIVITY").equals("ListaEmpeladosActivity btn") ||
+                getIntent().getStringExtra("ACTIVITY").equals("ListaEmpeladosActivity item")){
+                    for(int i = 0; i < listTipoUsuario.size(); i++){
+                        if(listTipoUsuario.get(i).getTipoUsuario().equals(MainActivity.USUARIO_TIPO_EMPLEADO.getTipoUsuario())){
+                            sp_tipoUsuario.setSelection(i);
+                            sp_tipoUsuario.setEnabled(false);
+                            break;
+                        }
+                    }
+                }
             }
         }
 
@@ -186,6 +215,16 @@ public class RegistroUsuariosAdministradoActivity extends AppCompatActivity {
                 }
                 ArrayAdapter<Local> adapter = new ArrayAdapter<>(RegistroUsuariosAdministradoActivity.this, android.R.layout.simple_dropdown_item_1line, listLocal);
                 sp_locales.setAdapter(adapter);
+                if(getIntent().getStringExtra("ACTIVITY").equals("ListaEmpeladosActivity btn") ||
+                        getIntent().getStringExtra("ACTIVITY").equals("ListaEmpeladosActivity item")){
+                    for(int i = 0; i < listLocal.size(); i++){
+                        if(listLocal.get(i).getIdLocal() == localIntent.getIdLocal()){
+                            sp_locales.setSelection(i);
+                            sp_locales.setEnabled(false);
+                            break;
+                        }
+                    }
+                }
             }
         }
 
@@ -215,43 +254,44 @@ public class RegistroUsuariosAdministradoActivity extends AppCompatActivity {
                             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if(task.isSuccessful()) {
+                                        FirebaseUser user = myAuth.getCurrentUser();
 
-                                    FirebaseUser user = myAuth.getCurrentUser();
+                                        FirebaseDatabase database = FirebaseDatabase.getInstance();
+                                        DatabaseReference myRef = database.getReference(MainActivity.TBL_USUARIOS);
+                                        Usuario usuario = new Usuario();
+                                        usuario.setIdUsuario(user.getUid());
+                                        usuario.setNombre(et_nombre.getText().toString());
+                                        usuario.setApellido(et_apellido.getText().toString());
+                                        usuario.setEdad(Integer.parseInt(et_edad.getText().toString()));
+                                        usuario.setFoto(MainActivity.FOTO_USUARIOS_NUEVOS_DEFAULT);
+                                        usuario.setCorreo(et_correo.getText().toString());
+                                        usuario.setTelefono(et_telefono.getText().toString());
 
-                                    FirebaseDatabase database = FirebaseDatabase.getInstance();
-                                    DatabaseReference myRef = database.getReference(MainActivity.TBL_USUARIOS);
-                                    Usuario usuario = new Usuario();
-                                    usuario.setIdUsuario(user.getUid());
-                                    usuario.setNombre(et_nombre.getText().toString());
-                                    usuario.setApellido(et_apellido.getText().toString());
-                                    usuario.setEdad(Integer.parseInt(et_edad.getText().toString()));
-                                    usuario.setFoto(MainActivity.FOTO_USUARIOS_NUEVOS_DEFAULT);
-                                    usuario.setCorreo(et_correo.getText().toString());
-                                    usuario.setTelefono(et_telefono.getText().toString());
+                                        //PARA TIPO DE USUARIO
+                                        usuario.setTipo(tipoU);
 
-                                    //PARA TIPO DE USUARIO
-                                    usuario.setTipo(tipoU);
+                                        //PARA ESTADO USUARIO
+                                        usuario.setEstado(estadoU);
 
-                                    //PARA ESTADO USUARIO
-                                    usuario.setEstado(estadoU);
-
-                                    myRef.child(user.getUid()).setValue(usuario);
+                                        myRef.child(user.getUid()).setValue(usuario);
 
 
-                                    //SI EL SPINNER DE LOCALES ESTA VISIBLE SIGNIFICA QUE REGISTRAREMOS UN EMPLEADO
-                                    //ENTONCES REGISTRAREMOS EL LOCAL ASIGNADO EN LA TABLA LOCALES
-                                    if(sp_locales.getVisibility() == View.VISIBLE){
-                                        FirebaseDatabase databaseE = FirebaseDatabase.getInstance();
-                                        DatabaseReference myRefE = database.getReference(MainActivity.TBL_EMPLEADOS);
-                                        Empleado empleado = new Empleado();
-                                        empleado.setUsuario(usuario);
-                                        empleado.setLocal(local);
-                                        myRefE.child(user.getUid()).setValue(empleado);
+                                        //SI EL SPINNER DE LOCALES ESTA VISIBLE SIGNIFICA QUE REGISTRAREMOS UN EMPLEADO
+                                        //ENTONCES REGISTRAREMOS EL LOCAL ASIGNADO EN LA TABLA LOCALES
+                                        if (sp_locales.getVisibility() == View.VISIBLE) {
+                                            FirebaseDatabase databaseE = FirebaseDatabase.getInstance();
+                                            DatabaseReference myRefE = database.getReference(MainActivity.TBL_EMPLEADOS);
+                                            Empleado empleado = new Empleado();
+                                            empleado.setUsuario(usuario);
+                                            empleado.setLocal(local);
+                                            myRefE.child(user.getUid()).setValue(empleado);
+                                        }
+
+                                        //SE CIERRA SESION PORQUE AL CREAR EL USUARIO QUEDA LA SESION INICIA
+                                        myAuth.signOut();
+                                        registroCompleto(user, et_contrasenia.getText().toString());
                                     }
-
-                                    //SE CIERRA SESION PORQUE AL CREAR EL USUARIO QUEDA LA SESION INICIA
-                                    myAuth.signOut();
-                                    registroCompleto(user, et_contrasenia.getText().toString());
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                         @Override

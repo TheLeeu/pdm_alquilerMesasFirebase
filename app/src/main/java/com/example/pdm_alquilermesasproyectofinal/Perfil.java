@@ -42,6 +42,7 @@ public class Perfil extends AppCompatActivity {
     public FirebaseDatabase database;
     public DatabaseReference referenData;
     private DatabaseReference referenciaData;
+    private DatabaseReference referenciaData2;
     private FirebaseStorage storage;
     private StorageReference reference;
     private FirebaseAuth mAuth;
@@ -75,6 +76,7 @@ public class Perfil extends AppCompatActivity {
         referenData.child(MainActivity.TBL_USUARIOS).child(currentUser.getUid()).addValueEventListener(getUsuario);
 
         referenciaData = database.getReference(MainActivity.TBL_USUARIOS).child(currentUser.getUid());
+        referenciaData2 = database.getReference(MainActivity.TBL_EMPLEADOS).child(currentUser.getUid());
 
         Log.d("Nombre", ""+usuario.getNombre());
 
@@ -137,6 +139,7 @@ public class Perfil extends AppCompatActivity {
             user.setEstado(usuario.getEstado());
             user.setTipo(usuario.getTipo());
 
+            referenciaData2.setValue(user);
             referenciaData.setValue(user)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
@@ -171,6 +174,32 @@ public class Perfil extends AppCompatActivity {
                 public void onComplete(@NonNull Task<Uri> task) {
                     Uri urlDescarga = task.getResult();
                     foto = urlDescarga.toString();
+
+
+                    Usuario user = new Usuario();
+                    user.setIdUsuario(usuario.getIdUsuario());
+                    user.setNombre(TxtNombre.getText().toString());
+                    user.setApellido(TxtApellido.getText().toString());
+                    user.setTelefono(TxtTelefono.getText().toString());
+                    user.setEdad(Integer.parseInt(TxtEdad.getText().toString()));
+                    user.setFoto(foto);
+                    user.setCorreo(usuario.getCorreo());
+                    user.setEstado(usuario.getEstado());
+                    user.setTipo(usuario.getTipo());
+
+                    referenciaData2.setValue(user);
+                    referenciaData.setValue(user)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+                                    referenData.child(MainActivity.TBL_USUARIOS).child(currentUser.getUid()).addValueEventListener(getUsuario);
+                                    Toast.makeText(Perfil.this, "DATOS MODIFICADOS CORRECTAMENTE", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
+
+
+
                     Log.i("URLl", urlDescarga.toString());
                     Glide.with(getApplicationContext()).load(urlDescarga).into(img);
 
