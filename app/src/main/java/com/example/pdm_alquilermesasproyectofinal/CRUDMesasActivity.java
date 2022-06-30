@@ -193,6 +193,7 @@ public class CRUDMesasActivity extends AppCompatActivity {
 
             myRef.child(idMesa).setValue(mesa);
             Toast.makeText(this, "Mesa agregada", Toast.LENGTH_SHORT).show();
+            finish();
 
         }else{
             Toast.makeText(this, "Debe llenar todos los campos", Toast.LENGTH_SHORT).show();

@@ -48,6 +48,7 @@ public class Perfil extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
     Usuario usuario = new Usuario();
+    private Empleado empl = new Empleado();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +57,7 @@ public class Perfil extends AppCompatActivity {
 
         database = FirebaseDatabase.getInstance();
         referenData = database.getReference();
+        referenciaData2 = database.getReference();
 
         storage = FirebaseStorage.getInstance();
         reference = storage.getReference();
@@ -74,10 +76,10 @@ public class Perfil extends AppCompatActivity {
         Log.d("ID", currentUser.getUid());
 
         referenData.child(MainActivity.TBL_USUARIOS).child(currentUser.getUid()).addValueEventListener(getUsuario);
+        referenciaData2.child(MainActivity.TBL_EMPLEADOS).child(currentUser.getUid()).addValueEventListener(getEmpleado);
 
         referenciaData = database.getReference(MainActivity.TBL_USUARIOS).child(currentUser.getUid());
         referenciaData2 = database.getReference(MainActivity.TBL_EMPLEADOS).child(currentUser.getUid());
-
         Log.d("Nombre", ""+usuario.getNombre());
 
         img.setOnClickListener(new View.OnClickListener() {
@@ -100,6 +102,21 @@ public class Perfil extends AppCompatActivity {
                 TxtApellido.setText(usuario.getApellido());
                 TxtTelefono.setText(usuario.getTelefono());
                 TxtEdad.setText(""+usuario.getEdad());
+            }
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError error) {
+
+        }
+    };
+
+    public ValueEventListener getEmpleado = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot snapshot) {
+            if (snapshot.exists()) {
+                empl = snapshot.getValue(Empleado.class);
+                Log.d("empleado local", empl.getLocal().getNombre());
             }
         }
 
@@ -139,7 +156,15 @@ public class Perfil extends AppCompatActivity {
             user.setEstado(usuario.getEstado());
             user.setTipo(usuario.getTipo());
 
-            referenciaData2.setValue(user);
+            if(usuario.getTipo().getTipoUsuario().equals(MainActivity.USUARIO_TIPO_EMPLEADO.getTipoUsuario())) {
+                FirebaseDatabase databaseE = FirebaseDatabase.getInstance();
+                DatabaseReference myRefE = databaseE.getReference(MainActivity.TBL_EMPLEADOS);
+                Empleado empleado = new Empleado();
+                empleado.setLocal(empl.getLocal());
+                empleado.setUsuario(user);
+                myRefE.child(currentUser.getUid()).setValue(empleado);
+
+            }
             referenciaData.setValue(user)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
@@ -187,7 +212,17 @@ public class Perfil extends AppCompatActivity {
                     user.setEstado(usuario.getEstado());
                     user.setTipo(usuario.getTipo());
 
-                    referenciaData2.setValue(user);
+
+                    if(usuario.getTipo().getTipoUsuario().equals(MainActivity.USUARIO_TIPO_EMPLEADO.getTipoUsuario())) {
+                        FirebaseDatabase databaseE = FirebaseDatabase.getInstance();
+                        DatabaseReference myRefE = databaseE.getReference(MainActivity.TBL_EMPLEADOS);
+                        Empleado empleado = new Empleado();
+                        empleado.setLocal(empl.getLocal());
+                        empleado.setUsuario(user);
+                        myRefE.child(currentUser.getUid()).setValue(empleado);
+
+                    }
+
                     referenciaData.setValue(user)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override

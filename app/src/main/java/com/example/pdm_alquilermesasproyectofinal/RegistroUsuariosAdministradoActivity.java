@@ -281,7 +281,7 @@ public class RegistroUsuariosAdministradoActivity extends AppCompatActivity {
                                         //ENTONCES REGISTRAREMOS EL LOCAL ASIGNADO EN LA TABLA LOCALES
                                         if (sp_locales.getVisibility() == View.VISIBLE) {
                                             FirebaseDatabase databaseE = FirebaseDatabase.getInstance();
-                                            DatabaseReference myRefE = database.getReference(MainActivity.TBL_EMPLEADOS);
+                                            DatabaseReference myRefE = databaseE.getReference(MainActivity.TBL_EMPLEADOS);
                                             Empleado empleado = new Empleado();
                                             empleado.setUsuario(usuario);
                                             empleado.setLocal(local);

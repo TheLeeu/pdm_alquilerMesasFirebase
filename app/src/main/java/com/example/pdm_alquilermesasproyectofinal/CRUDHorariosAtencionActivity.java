@@ -60,7 +60,8 @@ public class CRUDHorariosAtencionActivity extends AppCompatActivity {
         listHoras = new ArrayList<>();
         cargarHorasSpinner();
 
-        if(getIntent().getStringExtra("ACTIVITY").equals("ListaHorariosAtencionActivity btnAgregar")){
+        if(getIntent().getStringExtra("ACTIVITY").equals("ListaHorariosAtencionActivity btnAgregar") ||
+                getIntent().getStringExtra("ACTIVITY").equals("CRUDLocalActivity")){
             local = new Local(Integer.parseInt(getIntent().getStringExtra("idLocal")),
                     getIntent().getStringExtra("nombreLocal"),
                     getIntent().getStringExtra("direccionLocal"),
@@ -92,7 +93,7 @@ public class CRUDHorariosAtencionActivity extends AppCompatActivity {
                 }
             });
 
-        }else if(getIntent().getStringExtra("ACTIVITY").equals("ListaHorariosAtencionActivity item")){
+        }else if(getIntent().getStringExtra("ACTIVITY").equals("ListaHorariosAtencionActivity item") ){
             local = new Local(Integer.parseInt(getIntent().getStringExtra("idLocal")),
                     getIntent().getStringExtra("nombreLocal"),
                     getIntent().getStringExtra("direccionLocal"),

@@ -339,7 +339,15 @@ public class CRUDReservasActivity extends AppCompatActivity {
             if(snapshot.exists()){
                 for(DataSnapshot items: snapshot.getChildren()){
                     Reservacion reservacion = items.getValue(Reservacion.class);
-                    listReservaciones.add(reservacion);
+                    if(getIntent().getStringExtra("ACTIVITY").equals("ListaMesasActivity") ||
+                            getIntent().getStringExtra("ACTIVITY").equals("List_DipsMesas")) {
+                        if (reservacion.getMesa().getIdMesa().equals(mesa.getIdMesa())) {
+                            listReservaciones.add(reservacion);
+                        }
+                    }else{
+                        listReservaciones.add(reservacion);
+
+                    }
                 }
             }
         }
@@ -369,15 +377,17 @@ public class CRUDReservasActivity extends AppCompatActivity {
                     for(int i = 0; i < listMesas.size(); i++){
                         if(listMesas.get(i).getIdMesa().equals(mesa.getIdMesa())){
                             sp_mesas.setSelection(i);
+                            sp_mesas.setEnabled(false);
                             break;
                         }
                     }
                 }
+                /*
                 if(listMesas.size() > 0 && !getIntent().getStringExtra("ACTIVITY").equals("ListaMesasActivity")){
                     sp_mesas.setEnabled(true);
                 }else{
                     sp_mesas.setEnabled(false);
-                }
+                }*/
 
                 //INTERACCION DEL EMPLEADO
                 if(getIntent().getStringExtra("ACTIVITY").equals("List_DipsMesas")){

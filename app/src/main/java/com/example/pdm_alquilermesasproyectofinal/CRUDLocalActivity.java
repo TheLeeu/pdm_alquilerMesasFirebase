@@ -163,6 +163,20 @@ public class CRUDLocalActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<Uri> task) {
                     Uri urlDescarga = task.getResult();
                     foto = urlDescarga.toString();
+
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    DatabaseReference myRef = database.getReference(MainActivity.TBL_LOCALES);
+
+                    Local local = new Local();
+                    local.setIdLocal(idLocal);
+                    local.setNombre(et_nombre.getText().toString());
+                    local.setDireccion(et_direccion.getText().toString());
+                    local.setTelefono(et_telefono.getText().toString());
+                    local.setCoordenadasGps(et_coordenadas.getText().toString());
+                    local.setFoto(foto);
+
+                    myRef.child(String.valueOf(idLocal)).setValue(local);
+
                     Log.i("URLl", urlDescarga.toString());
                     Glide.with(getApplicationContext()).load(urlDescarga).into(img);
                 }
@@ -178,7 +192,7 @@ public class CRUDLocalActivity extends AppCompatActivity {
             DatabaseReference myRef = database.getReference(MainActivity.TBL_LOCALES);
 
             Local local = new Local();
-            local.setIdLocal((int) nuevoId);
+            local.setIdLocal(idLocal);
             local.setNombre(et_nombre.getText().toString());
             local.setDireccion(et_direccion.getText().toString());
             local.setTelefono(et_telefono.getText().toString());
@@ -203,6 +217,10 @@ public class CRUDLocalActivity extends AppCompatActivity {
     }
 
     public void abrirDialogo(){
+        et_coordenadas.setText("");
+        et_telefono.setText("");
+        et_direccion.setText("");
+        et_nombre.setText("");
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Desea agregarle datos a su local? Como:")
                 .setItems(new String[]{"Mesas", "Horarios de atención"}, new DialogInterface.OnClickListener() {
@@ -220,6 +238,18 @@ public class CRUDLocalActivity extends AppCompatActivity {
                                 intent.putExtra("coordenadasLocal", et_coordenadas.getText().toString());
                                 intent.putExtra("fotoLocal", foto);
                                 startActivity(intent);
+                                finish();
+                                break;
+                            case 1:
+                                Intent i = new Intent(getApplicationContext(), CRUDHorariosAtencionActivity.class);
+                                i.putExtra("ACTIVITY", "CRUDLocalActivity");
+                                i.putExtra("idLocal", String.valueOf(idRegistrado));
+                                i.putExtra("nombreLocal", et_nombre.getText().toString());
+                                i.putExtra("direccionLocal", et_direccion.getText().toString());
+                                i.putExtra("telefonoLocal", et_telefono.getText().toString());
+                                i.putExtra("coordenadasLocal", et_coordenadas.getText().toString());
+                                i.putExtra("fotoLocal", foto);
+                                startActivity(i);
                                 finish();
                                 break;
 
