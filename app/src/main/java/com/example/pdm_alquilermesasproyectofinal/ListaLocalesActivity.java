@@ -149,7 +149,15 @@ public class ListaLocalesActivity extends AppCompatActivity {
                                 startActivity(it);
                                 break;
                             case 4:
-                                Toast.makeText(ListaLocalesActivity.this, "falta programar", Toast.LENGTH_SHORT).show();
+                                Intent ite = new Intent(getApplicationContext(), ListaReservasLocalAdministradorActivity.class);
+                                ite.putExtra("ACTIVITY", "ListaLocalesActivity");
+                                ite.putExtra("idLocal", String.valueOf(listLocal.get(posicionItem).getIdLocal()));
+                                ite.putExtra("nombreLocal", listLocal.get(posicionItem).getNombre());
+                                ite.putExtra("direccionLocal", listLocal.get(posicionItem).getDireccion());
+                                ite.putExtra("telefonoLocal", listLocal.get(posicionItem).getTelefono());
+                                ite.putExtra("coordenadasLocal", listLocal.get(posicionItem).getCoordenadasGps());
+                                ite.putExtra("fotoLocal", listLocal.get(posicionItem).getFoto());
+                                startActivity(ite);
                                 break;
                         }
                     }
